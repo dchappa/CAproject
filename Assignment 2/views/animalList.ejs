@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Animal List</title>
+	</head>
+	<body>
+		<h1>This is a list of all the animals:</h1>
+
+		<% for(var i = 0; i< animalList.length; i++){ %>
+				<h4>Animal: <%= animalList[i].name %></h4>
+				<h5>Description: <%= animalList[i].description %> </h5>
+		<%} %>
+	</body>
+</html> 
