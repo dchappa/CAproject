@@ -115,6 +115,10 @@ var hamster = new Animal("Hamster", "Small, adorable pet. Unfortunately it dies 
 var frog = new Animal("Frog", "Small amphibian animal, has unique jump and very long tongue")
 var bee = new Animal("Bee", "Most likely to not be(e) your best friend. But the fate of the earth does depend on it.")
 
+var animals = [dog, cat, caterpillar, rabbit, peacock, mouse, python, hamster, frog, bee];
+
+
+
 var div = document.createElement('div');
 div.id = "master"
 document.getElementsByTagName('body')[0].appendChild(div);
@@ -126,62 +130,75 @@ document.getElementsByTagName('div')[0].appendChild(text);
 var list = document.getElementById("animalList");
 div.appendChild(list);
 
-var blank = document.createElement('option');
-blank.appendChild( document.createTextNode('') );
-blank.id = 'blank';
-list.appendChild(blank);
+// var blank = document.createElement('option');
+// blank.appendChild( document.createTextNode('') );
+// blank.id = 'blank';
+// list.appendChild(blank);
 
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(dog.name) );
-animal.id = 'dog';
-list.appendChild(animal);
+for(i=0; i < animals.length; i++){
+    var new_animal = document.createElement('option');
+    new_animal.appendChild( document.createTextNode(animals[i].name) );
+    new_animal.id = animals[i].name;
+    list.appendChild(new_animal);
+}
 
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(cat.name) );
-animal.id = 'cat';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(caterpillar.name) );
-animal.id = 'caterpillar';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(rabbit.name) );
-animal.id = 'rabbit';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(peacock.name) );
-animal.id = 'peacock';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(mouse.name) );
-animal.id = 'mouse';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(python.name) );
-animal.id = 'python';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(hamster.name) );
-animal.id = 'hamster';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(frog.name) );
-animal.id = 'frog';
-list.appendChild(animal);
-
-var animal = document.createElement('option');
-animal.appendChild( document.createTextNode(bee.name) );
-animal.id = 'bee';
-list.appendChild(animal);
 
 var list = document.getElementById("animalList")
 list.addEventListener("change", function(){
-
+    for(i=0; i < animals.length; i++){
+        if(list.value == animals[i].name){
+            document.getElementById("text").html = animals[i].description
+        }
+    }
 })
+
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(dog.name) );
+// animal.id = 'dog';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(cat.name) );
+// animal.id = 'cat';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(caterpillar.name) );
+// animal.id = 'caterpillar';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(rabbit.name) );
+// animal.id = 'rabbit';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(peacock.name) );
+// animal.id = 'peacock';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(mouse.name) );
+// animal.id = 'mouse';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(python.name) );
+// animal.id = 'python';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(hamster.name) );
+// animal.id = 'hamster';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(frog.name) );
+// animal.id = 'frog';
+// list.appendChild(animal);
+
+// var animal = document.createElement('option');
+// animal.appendChild( document.createTextNode(bee.name) );
+// animal.id = 'bee';
+// list.appendChild(animal);
