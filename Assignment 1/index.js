@@ -31,6 +31,10 @@ document.getElementsByTagName('div')[0].appendChild(text);
 var list = document.getElementById("animalList");
 div.appendChild(list);
 
+var blank = document.createElement('option');
+blank.appendChild( document.createTextNode('') );
+blank.id = 'blank';
+list.appendChild(blank);
 
 for(i=0; i < animals.length; i++){
     var new_animal = document.createElement('option');
