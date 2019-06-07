@@ -10,3 +10,13 @@ res.json(animal);
 }
 });
 };
+
+exports.list = function(req, res, next) {
+Animal.find({}, function(err, animals) {
+if (err) {
+return next(err);
+} else {
+res.json(animals);
+}
+});
+};

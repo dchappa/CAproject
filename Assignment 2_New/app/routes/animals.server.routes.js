@@ -1,4 +1,6 @@
-var users = require('../../app/controllers/animals.server.controller');
+var animals = require('../../app/controllers/animals.server.controller');
 module.exports = function(app) {
-app.route('/users').post(users.create);
+app.route('/animals')
+	.post(animals.create)
+	.get(animals.list)
 };
