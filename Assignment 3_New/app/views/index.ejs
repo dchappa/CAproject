@@ -5,11 +5,12 @@
  </head>
  <body>
  	<h1><%= title %></h1>
- 	<h3>Pick an animal to see it's description!<h3>
+ 	<h3>Pick an animal to see it's description!</h3>
     <select id="animalList">
     	<% for(var i in animalData) { %>
-    	<%= animalData[i] %>
+    	<option value="<%= animalData[i].description %>"> <%= animalData[i].name %> </option>
     	<% } %>
   	</select>
  </body>
 </html>
+<script src="./animalSelect.js"></script>

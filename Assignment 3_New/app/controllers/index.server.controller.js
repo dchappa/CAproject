@@ -5,18 +5,19 @@ exports.render = function(req, res) {
  }
 
  req.session.lastVisit = new Date();
- animals = Animal.find({}, function(err, animals) {
+ animals = Animal.find({}, function(err, animalData) {
 		if (err) {
 			return next(err);
 		} else {
-			res.json(animals);
+			// res.json(animalData);
+			res.render('index', {
+				 title: 'All about animals',
+				 animalData: animalData
+			});
 		}
 	});
- res.render('index', {
- title: 'All about animals',
- animalData: animals
- });
 }
+ 
 
 // exports.list = function(req, res, next) {
 // 	Animal.find({}, function(err, animals) {
