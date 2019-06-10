@@ -5,7 +5,7 @@ exports.render = function(req, res) {
  }
 
  req.session.lastVisit = new Date();
- animals = Animal.find({}, function(err, animalData) {
+Animal.find({}, function(err, animalData) {
 		if (err) {
 			return next(err);
 		} else {
