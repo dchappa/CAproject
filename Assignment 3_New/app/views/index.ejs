@@ -8,9 +8,8 @@
  	<h3>Pick an animal to see it's description!<h3>
     <select id="animalList">
     	<% for(var i in animalData) { %>
-    	<option value = <%= animalData[i].description %>
-    	<%= animalData[i].name %>
-  		<% } %>
+    	<%= animalData[i] %>
+    	<% } %>
   	</select>
  </body>
 </html>
