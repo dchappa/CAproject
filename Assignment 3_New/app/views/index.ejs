@@ -7,11 +7,14 @@
  	<h1><%= title %></h1>
  	<h3>Pick an animal to see it's description!</h3>
     <select id="animalList">
-    	<% for(var i in animalData) { %>
-    	<option value="<%= animalData[i].description %>"> <%= animalData[i].name %> </option>
-    	<% } %>
+    	<script type="text/javascript">
+ 		 var animals = <%= animalData %>
+ 		</script>
+ 		  	<script src="js/animalSelect.js"></script>
+
+    	<!-- <% for(var i in animalData) { %> -->
+    	<!-- <option value="<%= animalData[i].description %>"> <%= animalData[i].name %> </option> -->
+    	<!-- <% } %> -->
   	</select>
  </body>
-  	<script async src="js/animalSelect.js"></script>
-
 </html>
