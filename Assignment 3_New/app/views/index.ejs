@@ -8,7 +8,7 @@
  	<h3>Pick an animal to see it's description!</h3>
     <select id="animalList">
     	<script type="text/javascript">
- 		 var animals = <%= animalData %>
+ 		 var animals = <%- JSON.stringify(animalData) %>
  		</script>
  		  	<script src="js/animalSelect.js"></script>
 
