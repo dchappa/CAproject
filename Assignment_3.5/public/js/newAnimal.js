@@ -15,7 +15,7 @@ descriptionEntry.value = "Description";
 
 addBtn.onclick = function(){
 	xhttp.open("POST", "http://localhost:3000/animals", true);
-	xhttp.send("name=" + animalEntry.value + "&lname=" + descriptionEntry.value);
+	xhttp.send("name=" + animalEntry.value + "&description=" + descriptionEntry.value);
 }
 
 var body = document.getElementsByTagName("body")[0];
