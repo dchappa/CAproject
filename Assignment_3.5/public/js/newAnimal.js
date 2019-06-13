@@ -1,16 +1,4 @@
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
-
-// MongoClient.connect(url, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db("mydb");
-//   var myobj = { name: "Company Inc", address: "Highway 37" };
-//   dbo.collection("customers").insertOne(myobj, function(err, res) {
-//     if (err) throw err;
-//     console.log("1 document inserted");
-//     db.close();
-//   });
-// });
+var xhttp = new XMLHttpRequest();
 
 var addBtn = document.createElement("button");
 addBtn.style.height = "25px";
@@ -25,6 +13,10 @@ var descriptionEntry = document.createElement("INPUT");
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
 
+addBtn.onclick = function(){
+	xhttp.open("POST", "http://localhost:3000/animals", true);
+	xhttp.send("name=" + animalEntry.value + "&lname=" + descriptionEntry.value);
+}
 
 var body = document.getElementsByTagName("body")[0];
 body.appendChild(addBtn);
