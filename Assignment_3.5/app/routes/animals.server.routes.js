@@ -3,9 +3,12 @@ module.exports = function(app) {
 app.route('/animals')
 	.post(animals.create)
 	.get(animals.list)
+	.delete(animals.delete);
 
 app.route('/animals/:animalId')
-	.get(animals.read);
+	.get(animals.read)
+	.delete(animals.delete);
+
 
 app.param('animalId', animals.animalByID);
 };

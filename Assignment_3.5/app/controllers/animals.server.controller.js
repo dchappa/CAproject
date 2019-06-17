@@ -2,13 +2,23 @@ var Animal = require('mongoose').model('Animal');
 exports.create = function(req, res, next) {
 var animal = new Animal(req.body);
 
-animal.save(function(err) {
-if (err) {
-return next(err);
-} else {
-res.json(animal);
-}
-});
+	animal.save(function(err) {
+		if (err) {
+			return next(err);
+		} else {
+			res.json(animal);
+		}
+	});
+};
+
+exports.delete = function(req, res, next) {
+	req.animal.remove(function(err) {
+		if (err) {
+			return next(err);
+		} else {
+			res.json(req.animal);	
+		}
+	})
 };
 
 exports.list = function(req, res, next) {
