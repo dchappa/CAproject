@@ -6,7 +6,8 @@ app.route('/animals')
 
 app.route('/animals/:animalId')
 	.get(animals.read)
-	.delete(animals.delete);
+	.delete(animals.delete)
+	.put(animals.update);
 
 
 app.param('animalId', animals.animalByID);

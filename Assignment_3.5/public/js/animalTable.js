@@ -60,15 +60,65 @@ for(let i in animals){
 			document.getElementById(animals[i]._id + "description").style.display = "none";
 			
 		});
+
+	let editButton = document.getElementById("edit" + i);
+	let clicked = false;
+	var confirmBtn = document.createElement("button");
+	editButton.addEventListener("click", function(){
+		if(!clicked){
+			clicked = true;
+			let row = document.getElementById(animals[i]._id + "description");
+
+			var editName = document.createElement("INPUT");
+			editName.id = "editName"
+			editName.setAttribute("type", "text");
+			editName.value = animals[i].name;
+
+			var editDescription = document.createElement("INPUT");
+			editDescription.id = "editDescription"
+			editDescription.setAttribute("type", "text");
+			editDescription.value = animals[i].description;
+
+			row.appendChild(editName);
+			row.appendChild(editDescription);
+
+			confirmBtn.id = "confirm" + i;
+			confirmBtn.style.height = "25px";
+			confirmBtn.style.width = "60px";
+			confirmBtn.innerHTML = "Confirm"; 
+
+			confirmBtn.addEventListener("click", function(){
+				xhttp.open("PUT", "http://localhost:3000/animals/" + animals[i]._id, true);
+				xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+						xhttp.onload = function () {
+						var animalList = JSON.parse(xhttp.responseText);
+						if (xhttp.readyState == 4 && xhttp.status == "200") {
+							console.table(animalList);
+						} else {
+							console.error(animalList);
+						}
+					}
+					let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}'
+					let new_name = document.getElementById(animals[i]._id + "name");
+					new_name.innerHTML = editName.value;
+					let new_description = document.getElementById(animals[i]._id + "description");
+					new_description.innerHTML = editDescription.value;
+					xhttp.send(data);
+					list = document.getElementById("animalList");
+					list.remove((parseInt(i)+1));
+					list.options[i].innerHTML = editName.value;
+			  		list.options[i].value = editDescription.value;
+			  		// deleteBtn.style.display = "block";
+			  		// editBtn.style.display = "block";
+			  		row.appendChild(deleteBtn);
+			  		row.appendChild(editBtn);
+				});
+			row.appendChild(confirmBtn);
+		}
+	});
+
 }
 
-// hideAnimal = function(id){
-// 	for(let i in animals){
-// 		if(id == animals[i]._id){
-// 			document.getElementById()
-// 		}
-// 	}
-// }
 
 
 

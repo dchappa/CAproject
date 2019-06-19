@@ -1,4 +1,5 @@
 var Animal = require('mongoose').model('Animal');
+
 exports.create = function(req, res, next) {
 var animal = new Animal(req.body);
 
@@ -19,6 +20,16 @@ exports.delete = function(req, res, next) {
 			res.json(req.animal);	
 		}
 	})
+};
+
+exports.update = function(req,res,next) {
+	Animal.findByIdAndUpdate(req.animal.id, req.body, function(err, user){
+		if (err) {
+			return next(err);
+		} else {
+			res.json(user);
+		}
+	});
 };
 
 exports.list = function(req, res, next) {
