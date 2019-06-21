@@ -1,5 +1,7 @@
 var xhttp = new XMLHttpRequest();
 
+var currID = parseInt(i);
+
 var addBtn = document.createElement("button");
 	addBtn.id = "addBtn";
 	addBtn.style.height = "25px";
@@ -7,13 +9,13 @@ var addBtn = document.createElement("button");
 	addBtn.innerHTML = "Add";
 
 var deleteBtn = document.createElement("button");
-	deleteBtn.id = "delete" + (parseInt(i)+1);
+	// deleteBtn.id = "delete" + (currID + 1);
 	deleteBtn.style.height = "25px";
 	deleteBtn.style.width = "50px";
 	deleteBtn.innerHTML = "Delete"; 
 
 var editBtn = document.createElement("button");
-	editBtn.id = "edit" + (i + 1);
+	// editBtn.id = "edit" + (currID + 1);
 	editBtn.style.height = "25px";
 	editBtn.style.width = "50px";
 	editBtn.innerHTML = "Edit";  
@@ -28,23 +30,45 @@ descriptionEntry.id = "descriptionEntry"
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
 
-var recentAdds = [];
 addBtn.onclick = function(){
+	xhttp.onreadystatechange = function () {
+		if (xhttp.readyState == 4 && xhttp.status == "200") {
+			console.table(xhttp.responseText);
+		} else {
+			console.error(xhttp.responseText);
+		}
+	};
 	xhttp.open("POST", "http://localhost:3000/animals", true);
 	xhttp.setRequestHeader('Content-Type', 'application/json')
-	let data = '{"name":"' + animalEntry.value + '", "description":"' + descriptionEntry.value + '"}'
+	let data = '{"name":"' + animalEntry.value + '", "description":"' + descriptionEntry.value + '"}';
+	// data = JSON.stringify(data);
 	xhttp.send(data);
 
+	var xhttpGET = new XMLHttpRequest();
+	xhttpGET.onreadystatechange = function () {
+		if (xhttp.readyState == 4 && xhttp.status == "200") {
+			const value = JSON.parse(this.responseText);
+			animals.push(value[value.length-1]);
+			console.log(animals);
+		} 
+	};
+	xhttpGET.open('GET',"http://localhost:3000/animals", true);
+	xhttpGET.send();
 	// This appends it to the table
 	table = document.getElementById("aniTable");
 	let aniRow = document.createElement('tr');
   	var tdName = document.createElement('td');
   	tdName.innerHTML = animalEntry.value;
-  	tdName.id = animals[animals.length-1]._id + "name";
+  	tdName.id = animals[currID]._id + "name";
   	aniRow.appendChild(tdName);
   	var tdDescription = document.createElement('td');
   	tdDescription.innerHTML = descriptionEntry.value;
-  	tdDescription.id = animals[animals.length-1]._id + "description";
+  	tdDescription.id = animals[currID]._id + "description";
+  	deleteBtn.id = "delete" + (currID );
+  	deleteBtn.style.display = "block";
+  	editBtn.id = "edit" + (currID);
+  	editBtn.style.display = "block";
+  	currID = currID + 1;
   	tdDescription.appendChild(deleteBtn);
   	tdDescription.appendChild(editBtn);
   	aniRow.appendChild(tdDescription);
@@ -57,27 +81,48 @@ addBtn.onclick = function(){
     new_animal.id = animalEntry.value;
     new_animal.value = descriptionEntry.value;
     list.appendChild(new_animal);
-    recentAdds.push(animals[animals.length-1]._id);
 }
 
 deleteBtn.onclick = function (){
 		let table = document.getElementById("aniTable");
 			var parent = deleteBtn.parentElement;
-			ani_id = parent.id.substring(0, parent.id.length-11); //original id
-			xhttp.open("DELETE", "http://localhost:3000/animals/" + ani_id);
-					xhttp.onload = function () {
-					var animalList = JSON.parse(xhttp.responseText);
-					if (xhttp.readyState == 4 && xhttp.status == "200") {
-						console.table(animalList);
-					} else {
-						console.error(animalList);
-					}
-				}
-				xhttp.send();
-			document.getElementById(ani_id + "name").style.display = "none"; 
-			document.getElementById(ani_id + "name").style.display = "none";
+			// ani_id = parent.id.substring(0, parent.id.length-11); //original id
+			// xhttp.open("DELETE", "http://localhost:3000/animals/" + ani_id);
+			// 		xhttp.onload = function () {
+			// 		var animalList = JSON.parse(xhttp.responseText);
+			// 		if (xhttp.readyState == 4 && xhttp.status == "200") {
+			// 			console.table(animalList);
+			// 		} else {
+			// 			console.error(animalList);
+			// 		}
+			// 	}
+				// xhttp.send();
+			document.getElementById("newAnimalName" + deleteBtn.id.substring(6,deleteBtn.id.length )).style.display = "none"; 
+			document.getElementById("newAnimalDescription" + deleteBtn.id.substring(6,deleteBtn.id.length)).style.display = "none";
 		}
-	
+
+for(let i in animals){
+	let currButton = document.getElementById("delete" + i);
+	currButton.addEventListener("click", function(){
+			xhttp.open("DELETE", "http://localhost:3000/animals/" + animals[i]._id, true);
+				xhttp.onload = function () {
+				var animalList = JSON.parse(xhttp.responseText);
+				if (xhttp.readyState == 4 && xhttp.status == "200") {
+					console.table(animalList);
+				} else {
+					console.error(animalList);
+				}
+			}
+			xhttp.send();
+			//deletes from the dropdown
+			  	list = document.getElementById("animalList");
+			  	list.remove((parseInt(i)+1));
+			//deletes from the table
+			document.getElementById(animals[i]._id + "name").style.display = "none";
+			document.getElementById(animals[i]._id + "description").style.display = "none";
+			
+		});
+}
 
 var body = document.getElementsByTagName("body")[0];
 body.appendChild(addBtn);
