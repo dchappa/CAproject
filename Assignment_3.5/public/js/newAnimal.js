@@ -20,7 +20,7 @@ descriptionEntry.id = "descriptionEntry"
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
 
-addBtn.onclick = function(){}
+addBtn.onclick = function(){
 			xhttp.open("POST", "http://localhost:3000/animals", true);
 		xhttp.setRequestHeader('Content-Type', 'application/json');
 
@@ -159,7 +159,7 @@ addBtn.onclick = function(){}
 			}
 		});
 	}
-
+}
 
 
 
