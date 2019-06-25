@@ -39,10 +39,6 @@ addBtn.onclick = function(){
 	
 			addAnimal(animalEntry.value, descriptionEntry.value, deleteBtn, editBtn);
 			
-		// 	for(let i in animals){
-		// 	deleteButtonListener(i);
-		// 	editButtonListener(i);
-		// }
 			} 
 		};
 		var data = '{"name":"' + animalEntry.value + '", "description":"' + descriptionEntry.value + '"}';
@@ -71,7 +67,7 @@ function addAnimal(name, description, deleteBtn, editBtn){
 	  	// This will append it to the dropdown list
 	  	list = document.getElementById("animalList");
 	  	let new_animal = document.createElement('option');
-	    new_animal.appendChild( document.createTextNode(name));
+	    new_animal.appendChild(document.createTextNode(name));
 	    new_animal.id = name;
 	    new_animal.value = description;
 	    list.appendChild(new_animal);
@@ -99,10 +95,10 @@ function deleteButtonListener(aniIndex){
 					xhttpDel.send();					 			
 				})
 		}
-editButtonListener = function(aniIndex){
+function editButtonListener(aniIndex){
 		let currButton = document.getElementById("edit" + aniIndex);
 			let clicked = false;
-			var confirmBtn = document.createElement("button");
+			let confirmBtn = document.createElement("button");
 			currButton.addEventListener("click", function(){
 			if(!clicked){
 				xhttpEdit = new XMLHttpRequest();
@@ -130,34 +126,33 @@ editButtonListener = function(aniIndex){
 				confirmBtn.addEventListener("click", function(){
 					xhttpEdit.open("PUT", "http://localhost:3000/animals/" + animals[aniIndex]._id, true);
 					xhttpEdit.setRequestHeader('Content-type','application/json; charset=utf-8');
-							xhttpEdit.onload = function () {
+						xhttpEdit.onload = function () {
 							var animalList = JSON.parse(xhttpEdit.responseText);
 							if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
-								console.table(animalList);
+								let new_name = document.getElementById(animals[aniIndex]._id + "name");
+								new_name.innerHTML = editName.value;
+								let new_description = document.getElementById(animals[aniIndex]._id + "description");
+								new_description.childNodes[0].textContent = editDescription.value;
+								list = document.getElementById("animalList");
+								list.remove(aniIndex+1); // + 1 because there's a blank option
+								list.options[aniIndex].innerHTML = editName.value;
+						  		list.options[aniIndex].value = editDescription.value;
+						  		// deleteBtn.id = "delete" + aniIndex;
+						  		// row.appendChild(deleteBtn);
+						  		// editBtn.id = "edit" + aniIndex;
+						  		// row.appendChild(editBtn);
+						  		// editButtonListener(aniIndex);
 							} else {
 								console.error(animalList);
 							}
 						}
-						let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}'
-						let new_name = document.getElementById(animals[aniIndex]._id + "name");
-						new_name.innerHTML = editName.value;
-						let new_description = document.getElementById(animals[aniIndex]._id + "description");
-						new_description.innerHTML = editDescription.value;
+						let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}';
 						xhttpEdit.send(data);
-						list = document.getElementById("animalList");
-						list.remove(aniIndex+1);
-						list.options[aniIndex].innerHTML = editName.value;
-				  		list.options[aniIndex].value = editDescription.value;
-				  		row.appendChild(deleteBtn);
-				  		row.appendChild(editBtn);
 					});
 				row.appendChild(confirmBtn);
 			}
 		});
-}
-	
-
-
+	}
 
 var body = document.getElementsByTagName("body")[0];
 body.appendChild(addBtn);

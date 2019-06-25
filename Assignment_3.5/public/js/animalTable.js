@@ -102,16 +102,12 @@ for(let i in animals){
 					let new_name = document.getElementById(animals[i]._id + "name");
 					new_name.innerHTML = editName.value;
 					let new_description = document.getElementById(animals[i]._id + "description");
-					new_description.innerHTML = editDescription.value;
+					new_description.childNodes[0].textContent = editDescription.value;
 					xhttp.send(data);
 					list = document.getElementById("animalList");
 					list.remove((parseInt(i)+1));
 					list.options[i].innerHTML = editName.value;
 			  		list.options[i].value = editDescription.value;
-			  		// deleteBtn.style.display = "block";
-			  		// editBtn.style.display = "block";
-			  		row.appendChild(deleteBtn);
-			  		row.appendChild(editBtn);
 				});
 			row.appendChild(confirmBtn);
 		}
