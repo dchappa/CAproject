@@ -137,6 +137,9 @@ function editButtonListener(aniIndex){
 								list.remove(aniIndex+1); // + 1 because there's a blank option
 								list.options[aniIndex].innerHTML = editName.value;
 						  		list.options[aniIndex].value = editDescription.value;
+							  	editName.style.display = "none";
+							  	editDescription.style.display = "none";
+							  	confirmBtn.style.display = "none";
 							} else {
 								console.error(animalList);
 							}
