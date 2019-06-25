@@ -67,16 +67,18 @@ document.body.appendChild(table);
 				xhttpEdit = new XMLHttpRequest();
 				clicked = true;
 				let row = document.getElementById(animals[i]._id + "description");
+				let new_name = document.getElementById(animals[i]._id + "name");
+				let new_description = document.getElementById(animals[i]._id + "description");
 
 				var editName = document.createElement("INPUT");
 				editName.id = "editName"
 				editName.setAttribute("type", "text");
-				editName.value = animals[i].name;
+				editName.value = new_name.innerHTML;
 
 				var editDescription = document.createElement("INPUT");
 				editDescription.id = "editDescription"
 				editDescription.setAttribute("type", "text");
-				editDescription.value = animals[i].description;
+				editDescription.value = new_description.childNodes[0].textContent;
 
 				row.appendChild(editName);
 				row.appendChild(editDescription);
@@ -93,9 +95,8 @@ document.body.appendChild(table);
 							xhttpEdit.onload = function () {
 								var animalList = JSON.parse(xhttpEdit.responseText);
 								if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
-									let new_name = document.getElementById(animals[i]._id + "name");
+									
 									new_name.innerHTML = editName.value;
-									let new_description = document.getElementById(animals[i]._id + "description");
 									new_description.childNodes[0].textContent = editDescription.value;
 									list = document.getElementById("animalList");
 									list.remove(i+1); // + 1 because there's a blank option
@@ -105,6 +106,7 @@ document.body.appendChild(table);
 							  		editDescription.style.display = "none";
 							  		confirmBtn.style.display = "none";
 							  		clicked = false;
+							  		editName.value = new_name.innerHTML;
 								} else {
 									console.error(animalList);
 								}
