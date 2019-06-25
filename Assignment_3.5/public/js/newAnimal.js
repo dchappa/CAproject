@@ -98,7 +98,6 @@ function deleteButtonListener(aniIndex){
 function editButtonListener(aniIndex){
 		let currButton = document.getElementById("edit" + aniIndex);
 			let clicked = false;
-			let confirmBtn = document.createElement("button");
 			currButton.addEventListener("click", function(){
 			if(!clicked){
 				xhttpEdit = new XMLHttpRequest();
@@ -118,6 +117,7 @@ function editButtonListener(aniIndex){
 				row.appendChild(editName);
 				row.appendChild(editDescription);
 
+				let confirmBtn = document.createElement("button");
 				confirmBtn.id = "confirm" + aniIndex;
 				confirmBtn.style.height = "25px";
 				confirmBtn.style.width = "60px";
@@ -140,6 +140,7 @@ function editButtonListener(aniIndex){
 							  	editName.style.display = "none";
 							  	editDescription.style.display = "none";
 							  	confirmBtn.style.display = "none";
+							  	clicked = false;
 							} else {
 								console.error(animalList);
 							}
