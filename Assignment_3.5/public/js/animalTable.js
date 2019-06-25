@@ -66,6 +66,7 @@ for(let i in animals){
 	var confirmBtn = document.createElement("button");
 	editButton.addEventListener("click", function(){
 		if(!clicked){
+			xhttpEdit = new XMLHttpRequest();
 			clicked = true;
 			let row = document.getElementById(animals[i]._id + "description");
 
@@ -88,28 +89,27 @@ for(let i in animals){
 			confirmBtn.innerHTML = "Confirm"; 
 
 			confirmBtn.addEventListener("click", function(){
-				xhttp.open("PUT", "http://localhost:3000/animals/" + animals[i]._id, true);
-				xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
-						xhttp.onload = function () {
-						var animalList = JSON.parse(xhttp.responseText);
-						if (xhttp.readyState == 4 && xhttp.status == "200") {
-							console.table(animalList);
-						} else {
-							console.error(animalList);
+					xhttpEdit.open("PUT", "http://localhost:3000/animals/" + animals[i]._id, true);
+					xhttpEdit.setRequestHeader('Content-type','application/json; charset=utf-8');
+						xhttpEdit.onload = function () {
+							var animalList = JSON.parse(xhttpEdit.responseText);
+							if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
+								let new_name = document.getElementById(animals[i]._id + "name");
+								new_name.innerHTML = editName.value;
+								let new_description = document.getElementById(animals[i]._id + "description");
+								new_description.childNodes[0].textContent = editDescription.value;
+								list = document.getElementById("animalList");
+								list.remove(i+1); // + 1 because there's a blank option
+								list.options[i].innerHTML = editName.value;
+						  		list.options[i].value = editDescription.value;
+							} else {
+								console.error(animalList);
+							}
 						}
-					}
-					let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}'
-					let new_name = document.getElementById(animals[i]._id + "name");
-					new_name.innerHTML = editName.value;
-					let new_description = document.getElementById(animals[i]._id + "description");
-					new_description.childNodes[0].textContent = editDescription.value;
-					xhttp.send(data);
-					list = document.getElementById("animalList");
-					list.remove((parseInt(i)+1));
-					list.options[i].innerHTML = editName.value;
-			  		list.options[i].value = editDescription.value;
-				});
-			row.appendChild(confirmBtn);
+						let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}';
+						xhttpEdit.send(data);
+					});
+				row.appendChild(confirmBtn);
 		}
 	});
 
