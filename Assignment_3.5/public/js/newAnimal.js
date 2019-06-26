@@ -16,7 +16,7 @@ var descriptionEntry = document.createElement("INPUT");
 descriptionEntry.id = "descriptionEntry"
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
-
+var currDeleted = 0;
 addBtn.onclick = function(){
 			xhttp.open("POST", "http://localhost:3000/animals", true);
 		xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -73,6 +73,9 @@ function addAnimal(name, description, deleteBtn, editBtn){
 	    list.appendChild(new_animal);
 	    deleteButtonListener(animals.length-1);
 		editButtonListener(animals.length-1);
+		if (currDeleted != 0){
+			currDeleted--;
+		}
 }
 function deleteButtonListener(aniIndex){
 	xhttpDel = new XMLHttpRequest();
@@ -88,6 +91,7 @@ function deleteButtonListener(aniIndex){
 							//deletes from the table
 							document.getElementById(animals[aniIndex]._id + "name").style.display = "none";
 							document.getElementById(animals[aniIndex]._id + "description").style.display = "none";
+							currDeleted++;
 						} else {
 							console.error(animalList);
 						}
@@ -134,13 +138,13 @@ function editButtonListener(aniIndex){
 							if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
 								new_name.innerHTML = editName.value;
 								new_description.childNodes[0].textContent = editDescription.value;
-								list = document.getElementById("animalList");
-								list.remove(aniIndex+1); // + 1 because there's a blank option
-								list.options[aniIndex].innerHTML = editName.value;
-						  		list.options[aniIndex].value = editDescription.value;
-							  	editName.style.display = "none";
+								editName.style.display = "none";
 							  	editDescription.style.display = "none";
 							  	confirmBtn.style.display = "none";
+							  	list = document.getElementById("animalList");
+								// list.remove(aniIndex + 1 - currDeleted); // + 1 because there's a blank option
+								list.options[aniIndex + 1 - currDeleted].innerHTML = editName.value;
+						  		list.options[aniIndex + 1 - currDeleted].value = editDescription.value;
 							  	clicked = false;
 							} else {
 								console.error(animalList);
