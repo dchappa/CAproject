@@ -98,12 +98,15 @@ document.body.appendChild(table);
 							xhttpEdit.onload = function () {
 								var animalList = JSON.parse(xhttpEdit.responseText);
 								if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
+									var drop_val = document.getElementById(animals[i]._id)
 									new_name.innerHTML = editName.value;
 									new_description.childNodes[0].textContent = editDescription.value;
 									list = document.getElementById("animalList");
 									// list.remove(i+1); // + 1 because there's a blank option
 									// list.options[i + 1 - currDeleted].innerHTML = editName.value;
 						  	// 		list.options[i + 1 - currDeleted].value = editDescription.value;
+						  			drop_val.innerHTML = editName.value;
+						  			drop_val.value = editDescription.value;
 							  		editName.style.display = "none";
 							  		editDescription.style.display = "none";
 							  		confirmBtn.style.display = "none";
