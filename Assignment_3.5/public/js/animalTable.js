@@ -52,7 +52,6 @@ document.body.appendChild(table);
 						  	let list = document.getElementById("animalList");
 						  	document.getElementById(animals[i]._id).selected = true;
 						  	 list.remove(list.selectedIndex);
-
 						//deletes from the table
 							document.getElementById(animals[i]._id + "name").style.display = "none";
 							document.getElementById(animals[i]._id + "description").style.display = "none";
