@@ -17,7 +17,7 @@ list.appendChild(blank);
 for(var i in animals){
     let new_animal = document.createElement('option');
     new_animal.appendChild( document.createTextNode(animals[i].name) );
-    new_animal.id = animals[i].name;
+    new_animal.id = animals[i]._id;
     new_animal.value = animals[i].description
     list.appendChild(new_animal);
 }

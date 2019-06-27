@@ -1,4 +1,28 @@
 h1{
-	color: blue;
+	color: black;
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+#animalList{
+	align: center;
+}
+
+table.center, th, td {
+	margin-left:auto; 
+    margin-right:auto;
+  	border: 3px solid black;
+  	text-align: center;
+  	position: center;
+}
+
+.dropdown {
+  position: center;
+  display: inline-block;
+}
+
+body{
 	text-align: center;
 }

@@ -16,7 +16,7 @@ var descriptionEntry = document.createElement("INPUT");
 descriptionEntry.id = "descriptionEntry"
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
-var currDeleted = 0;
+// var currDeleted = 0;
 addBtn.onclick = function(){
 			xhttp.open("POST", "http://localhost:3000/animals", true);
 		xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -35,10 +35,7 @@ addBtn.onclick = function(){
 				editBtn.style.height = "25px";
 				editBtn.style.width = "50px";
 				editBtn.innerHTML = "Edit";
-
-	
 			addAnimal(animalEntry.value, descriptionEntry.value, deleteBtn, editBtn);
-			
 			} 
 		};
 		var data = '{"name":"' + animalEntry.value + '", "description":"' + descriptionEntry.value + '"}';
@@ -68,7 +65,7 @@ function addAnimal(name, description, deleteBtn, editBtn){
 	  	list = document.getElementById("animalList");
 	  	let new_animal = document.createElement('option');
 	    new_animal.appendChild(document.createTextNode(name));
-	    new_animal.id = name;
+	    new_animal.id = animals[animals.length-1]._id;
 	    new_animal.value = description;
 	    list.appendChild(new_animal);
 	    deleteButtonListener(animals.length-1);
@@ -76,6 +73,7 @@ function addAnimal(name, description, deleteBtn, editBtn){
 		if (currDeleted != 0){
 			currDeleted--;
 		}
+
 }
 function deleteButtonListener(aniIndex){
 	xhttpDel = new XMLHttpRequest();
@@ -85,9 +83,12 @@ function deleteButtonListener(aniIndex){
 						xhttpDel.onload = function () {
 						var animalList = JSON.parse(xhttpDel.responseText);
 						if (xhttpDel.readyState == 4 && xhttpDel.status == "200") {
-								//deletes from the dropdown
-							 	list = document.getElementById("animalList");
-							  	list.remove(aniIndex+1);
+							//deletes from the dropdown
+							 	//deletes from the dropdown
+						  	let list = document.getElementById("animalList");
+						  	document.getElementById(animals[aniIndex]._id).selected = true;
+						  	 list.remove(list.selectedIndex);
+
 							//deletes from the table
 							document.getElementById(animals[aniIndex]._id + "name").style.display = "none";
 							document.getElementById(animals[aniIndex]._id + "description").style.display = "none";

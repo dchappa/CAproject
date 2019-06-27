@@ -1,15 +1,16 @@
 var xhttp = new XMLHttpRequest();
 
 var table = document.createElement('table')
-table.id = "aniTable"
+table.align = "center";
+table.id = "aniTable";
 var row = document.createElement('tr')
 var animalName = document.createElement('th');
-animalName.innerHTML = "Name"
+animalName.innerHTML = "Name";
 var animalDescription = document.createElement('th');
-animalDescription.innerHTML = "Description"
-row.appendChild(animalName)
-row.appendChild(animalDescription)
-table.appendChild(row)
+animalDescription.innerHTML = "Description";
+row.appendChild(animalName);
+row.appendChild(animalDescription);
+table.appendChild(row);
 
 for(var i in animals){
 let aniRow = document.createElement('tr');
@@ -48,11 +49,14 @@ document.body.appendChild(table);
 					var animalList = JSON.parse(delXHTTP.responseText);
 					if (delXHTTP.readyState == 4 && delXHTTP.status == "200") {
 						//deletes from the dropdown
-						  	list = document.getElementById("animalList");
-						  	list.remove((parseInt(i)+1));
+						  	let list = document.getElementById("animalList");
+						  	document.getElementById(animals[i]._id).selected = true;
+						  	 list.remove(list.selectedIndex);
+
 						//deletes from the table
 							document.getElementById(animals[i]._id + "name").style.display = "none";
 							document.getElementById(animals[i]._id + "description").style.display = "none";
+							currDeleted++;
 					} else {
 						console.error(animalList);
 					}
@@ -95,13 +99,12 @@ document.body.appendChild(table);
 							xhttpEdit.onload = function () {
 								var animalList = JSON.parse(xhttpEdit.responseText);
 								if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
-									
 									new_name.innerHTML = editName.value;
 									new_description.childNodes[0].textContent = editDescription.value;
 									list = document.getElementById("animalList");
-									list.remove(i+1); // + 1 because there's a blank option
-									list.options[i].innerHTML = editName.value;
-							  		list.options[i].value = editDescription.value;
+									// list.remove(i+1); // + 1 because there's a blank option
+									// list.options[i + 1 - currDeleted].innerHTML = editName.value;
+						  	// 		list.options[i + 1 - currDeleted].value = editDescription.value;
 							  		editName.style.display = "none";
 							  		editDescription.style.display = "none";
 							  		confirmBtn.style.display = "none";
