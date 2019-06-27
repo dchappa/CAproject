@@ -14,6 +14,7 @@ table.appendChild(row);
 
 for(var i in animals){
 let aniRow = document.createElement('tr');
+	aniRow.id = "aniRow" + animals[i].name + i;
   let tdName = document.createElement('td');
   tdName.innerHTML = animals[i].name;
   tdName.id = animals[i]._id + "name";
@@ -45,16 +46,17 @@ document.body.appendChild(table);
 		let currButton = document.getElementById("delete" + i);
 		currButton.addEventListener("click", function(){
 				delXHTTP.open("DELETE", "http://localhost:3000/animals/" + animals[i]._id, true);
-					delXHTTP.onload = function () {
-					var animalList = JSON.parse(delXHTTP.responseText);
+					delXHTTP.onload = function () {												
+					let animalList = JSON.parse(delXHTTP.responseText);
 					if (delXHTTP.readyState == 4 && delXHTTP.status == "200") {
+						//deletes from the table
+							let aniTable = document.getElementById("aniTable");
+							let row = document.getElementById("aniRow" + animals[i].name + i);
+							aniTable.deleteRow(row.rowIndex);										
 						//deletes from the dropdown
 						  	let list = document.getElementById("animalList");
 						  	document.getElementById(animals[i]._id).selected = true;
 						  	 list.remove(list.selectedIndex);
-						//deletes from the table
-							document.getElementById(animals[i]._id + "name").style.display = "none";
-							document.getElementById(animals[i]._id + "description").style.display = "none";
 							currDeleted++;
 					} else {
 						console.error(animalList);
@@ -101,11 +103,7 @@ document.body.appendChild(table);
 									var drop_val = document.getElementById(animals[i]._id)
 									new_name.innerHTML = editName.value;
 									new_description.childNodes[0].textContent = editDescription.value;
-									list = document.getElementById("animalList");
-									// list.remove(i+1); // + 1 because there's a blank option
-									// list.options[i + 1 - currDeleted].innerHTML = editName.value;
-						  	// 		list.options[i + 1 - currDeleted].value = editDescription.value;
-						  			drop_val.innerHTML = editName.value;
+									list = drop_val.innerHTML = editName.value;
 						  			drop_val.value = editDescription.value;
 							  		editName.style.display = "none";
 							  		editDescription.style.display = "none";

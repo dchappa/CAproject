@@ -48,6 +48,7 @@ addBtn.onclick = function(){
 function addAnimal(name, description, deleteBtn, editBtn){
 	var table = document.getElementById("aniTable");
 		let aniRow = document.createElement('tr');
+		aniRow.id = "aniRow" + name + (animals.length-1);
 	  	let tdName = document.createElement('td');
 	  	tdName.innerHTML = name;
 	  	tdName.id = animals[animals.length-1]._id + "name"
@@ -83,15 +84,15 @@ function deleteButtonListener(aniIndex){
 						xhttpDel.onload = function () {
 						var animalList = JSON.parse(xhttpDel.responseText);
 						if (xhttpDel.readyState == 4 && xhttpDel.status == "200") {
+							//deletes from the table
+							let aniTable = document.getElementById("aniTable");
+							let row = document.getElementById("aniRow" + animals[aniIndex].name + (aniIndex));
+							aniTable.deleteRow(row.rowIndex);
+
 							//deletes from the dropdown
-							 	//deletes from the dropdown
 						  	let list = document.getElementById("animalList");
 						  	document.getElementById(animals[aniIndex]._id).selected = true;
-						  	 list.remove(list.selectedIndex);
-
-							//deletes from the table
-							document.getElementById(animals[aniIndex]._id + "name").style.display = "none";
-							document.getElementById(animals[aniIndex]._id + "description").style.display = "none";
+						  	list.remove(list.selectedIndex);
 							currDeleted++;
 						} else {
 							console.error(animalList);
@@ -141,8 +142,6 @@ function editButtonListener(aniIndex){
 								new_name.innerHTML = editName.value;
 								new_description.childNodes[0].textContent = editDescription.value;
 							  	list = document.getElementById("animalList");
-								// list.options[aniIndex + 1].innerHTML = editName.value;
-						  // 		list.options[aniIndex + 1].value = editDescription.value;
 						  		drop_val.innerHTML = editName.value;
 						  		drop_val.value = editDescription.value;
 						  		editName.style.display = "none";
