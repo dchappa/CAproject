@@ -1,25 +1,19 @@
 	var addBtn = $('<button>');
-	addBtn.attr({
-		id: 'confirm' + i,
-	});
-	addBtn.css({
-		height: "25px",
-		width: "50px"
-	});
-	addBtn.html("Add");
+	addBtn
+		.attr({id: 'confirm' + i})
+		.css({ height: "25px", width: "50px"})
+			.html("Add");
 
 var animalEntry = $('<input>');
-animalEntry.attr({
-	id: 'animalEntry',
-	type: 'text'
-}).val('Animal Name')
+animalEntry
+	.attr({id: 'animalEntry', type: 'text'})
+		.val('Animal Name');
 
 
 var descriptionEntry = $('<input>');
-descriptionEntry.attr({
-	id: 'descriptionEntry',
-	type: 'text'
-}).val('Description')
+descriptionEntry
+	.attr({id: 'descriptionEntry', type: 'text'})
+		.val('Description');
 
 addBtn.click(function(){
 			$.ajax({
@@ -34,12 +28,12 @@ addBtn.click(function(){
 							const value = response;
 							animals.push(value);
 							var deleteBtn = $('<button>');
-							deleteBtn.css({'height': 25, 'width':50});
-							deleteBtn.html("Delete");
+								.css({'height': 25, 'width':50});
+									.html("Delete");
 
 							var editBtn = $('<button>');
-							editBtn.css({'height': 25, 'width':50});
-							editBtn.html("Edit");
+								.css({'height': 25, 'width':50});
+									.html("Edit");
 						addAnimal(animalEntry.val(), descriptionEntry.val(), deleteBtn, editBtn);
 				}
 			})
@@ -50,25 +44,28 @@ function addAnimal(name, description, deleteBtn, editBtn){
 	let aniRow = $('<tr>');
 		aniRow.attr('id' , "aniRow" + name + (animals.length-1));
 		let tdName = $('<td>');
-	  	tdName.html(name);
-	  	tdName.attr('id' , animals[animals.length-1]._id + "name");
+	  	tdName
+					.html(name);
+	  		.attr('id' , animals[animals.length-1]._id + "name");
 	  	aniRow.append(tdName);
+
 			let tdDescription = $('<td>');
-	  	tdDescription.html(description);
-	  	tdDescription.attr('id' , animals[animals.length-1]._id + "description")
+	  			.html(description);
+	  		.attr('id' , animals[animals.length-1]._id + "description")
 	  	deleteBtn.attr('id' ,"delete" + (animals.length-1));
 	  	editBtn.attr('id' ,"edit" + (animals.length-1));
-	  	tdDescription.append(deleteBtn);
-	  	tdDescription.append(editBtn);
+	  	tdDescription
+					.append(deleteBtn);
+	  			.append(editBtn);
 	  	aniRow.append(tdDescription);
 	  	table.append(aniRow);
 	  	// This will append it to the dropdown list
 	  	list =  $("#animalList");
 	  	let new_animal = $('<option>');
-			new_animal.text(name);
-			new_animal.attr({
-				id: animals[animals.length-1]._id,
-			}).val(description);
+			new_animal
+					.text(name);
+				.attr({id: animals[animals.length-1]._id})
+					.val(description);
 	    list.append(new_animal);
 	    deleteButtonListener(animals.length-1);
 		editButtonListener(animals.length-1);
@@ -104,30 +101,23 @@ function editButtonListener(aniIndex){
 				let new_description = $('#' + animals[aniIndex]._id + "description");
 
 				var editName = $('<input>');
-				editName.attr({
-					id: 'editName',
-					type: 'text'
-				}).val(new_name.html())
+				editName
+					.attr({ id: 'editName', type: 'text'})
+						.val(new_name.html())
 
 				var editDescription = $('<input>');
-				editDescription.attr({
-					id: 'editDescription',
-					type: 'text'
-				}).val(new_description.contents()[0].nodeValue);
+				editDescription
+					.attr({id: 'editDescription', type: 'text' })
+						.val(new_description.contents()[0].nodeValue);
 
 				row.append(editName);
 				row.append(editDescription);
 
 				let confirmBtn = $('<button>');
-				confirmBtn.attr({
-					id: 'confirm' + aniIndex,
-				});
-				confirmBtn.css({
-					height: "25px",
-					width: "60px"
-				});
-
-				confirmBtn.html("Confirm");
+				confirmBtn
+					.attr({id: 'confirm' + aniIndex});
+						.css({ height: "25px", width: "60px" });
+						.html("Confirm");
 
 				row.append(confirmBtn);
 
@@ -145,8 +135,9 @@ function editButtonListener(aniIndex){
 										var drop_val = $('#' + animals[aniIndex]._id);
 										new_name.html(editName.val());
 										new_description.contents()[0].nodeValue = editDescription.val();
-								  		drop_val.html(editName.val());
-								  		drop_val.val(editDescription.val());
+								  		drop_val
+													.html(editName.val());
+								  				.val(editDescription.val());
 											editName.css('display', 'none');
 											editDescription.css('display', 'none');
 											confirmBtn.css('display', 'none');
@@ -161,6 +152,7 @@ function editButtonListener(aniIndex){
 
 
 var body = $('body');
-body.append(addBtn);
-body.append(animalEntry);
-body.append(descriptionEntry);
+body
+	.append(addBtn);
+	.append(animalEntry);
+	.append(descriptionEntry);

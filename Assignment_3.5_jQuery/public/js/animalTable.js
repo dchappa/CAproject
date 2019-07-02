@@ -1,41 +1,44 @@
 var xhttp = new XMLHttpRequest();
 
 var table = $('<table>');
-table.attr({
-id: "aniTable",
-align: "center"
-});
+table.attr({id: "aniTable", align: "center"});
 var row = $('<tr>');
 var animalName = $('<th>');
 animalName.html("Name");
 var animalDescription = $('<th>');
 animalDescription.html("Description");
-row.append(animalName);
-row.append(animalDescription);
+row
+	.append(animalName);
+	.append(animalDescription);
 table.append(row);
 
 for(var i in animals){
 	let aniRow = $('<tr>');
 	aniRow.attr('id', "aniRow" + animals[i].name + i);
   let tdName = $('<td>');
-  tdName.html(animals[i].name);
-  tdName.attr('id', animals[i]._id + "name");
+  tdName
+			.html(animals[i].name);
+  	.attr('id', animals[i]._id + "name");
   aniRow.append(tdName);
   let tdDescription = $('<td>');
-  tdDescription.html(animals[i].description);
-  tdDescription.attr('id', animals[i]._id + "description");
+  tdDescription
+			.html(animals[i].description);
+  		.attr('id', animals[i]._id + "description");
   animalDescription.append(tdDescription);
   aniRow.append(tdDescription);
   var deleteBtn = $('<button>');
-	deleteBtn.attr('id', "delete" + i)
-	deleteBtn.css({'height': 25, 'width':50});
-	deleteBtn.html("Delete");
+	deleteBtn
+				.attr('id', "delete" + i)
+			.css({'height': 25, 'width':50});
+				.html("Delete");
 	var editBtn = $('<button>');
-	editBtn.attr('id', "edit" + i);
-	editBtn.css({'height': 25, 'width':50});
-	editBtn.html("Edit");
-  	tdDescription.append(deleteBtn);
-  	tdDescription.append(editBtn);
+		editBtn
+				.attr('id', "edit" + i);
+			.css({'height': 25, 'width':50});
+				.html("Edit");
+  	tdDescription
+			.append(deleteBtn);
+  		.append(editBtn);
   table.append(aniRow);
 }
 
@@ -69,30 +72,23 @@ $('body').append(table);
 				let new_description = $('#' + animals[i]._id + "description");
 
 				var editName = $('<input>');
-				editName.attr({
-					id: 'editName',
-					type: 'text'
-				}).val(new_name.html());
+				editName
+					.attr({id: 'editName', type: 'text'})
+						.val(new_name.html());
 
 				var editDescription = $('<input>');
-				editDescription.attr({
-					id: 'editDescription',
-					type: 'text'
-				}).val(new_description.contents()[0].nodeValue);
+				editDescription
+					.attr({id: 'editDescription',type: 'text'})
+						.val(new_description.contents()[0].nodeValue);
 
 				row.append(editName);
 				row.append(editDescription);
 
 				let confirmBtn = $('<button>');
-				confirmBtn.attr({
-					id: 'confirm' + i,
-				});
-				confirmBtn.css({
-					height: "25px",
-					width: "50px"
-				});
-
-				confirmBtn.html("Confirm");
+				confirmBtn
+						.attr({id: 'confirm' + i});
+					.css({height: "25px", width: "50px"});
+						.html("Confirm");
 
 				confirmBtn.click(function(){
 						$.ajax({
