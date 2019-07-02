@@ -1,8 +1,10 @@
 var xhttp = new XMLHttpRequest();
 
 var table = $('<table>');
-table.css('align', 'center');
-table.attr('id', "aniTable");
+table.attr({
+id: "aniTable",
+align: "center"
+});
 var row = $('<tr>');
 var animalName = $('<th>');
 animalName.html("Name");
