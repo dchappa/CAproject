@@ -39,22 +39,20 @@ for(var i in animals){
   table.append(aniRow);
 }
 
-$(document.body).append(table);
+$('body').append(table);
 
 	for(let i in animals){
 		let currButton = $('#delete'+i);
-		currButton.click( function(){
+		currButton.click(function(){
 		$.ajax({
 			url: "http://localhost:3000/animals/" + animals[i]._id,
 			type: "DELETE",
 			dataType: "json",
 			success: function(result){
-									let aniTable = $('#aniTable');
-									// let row = document.getElementById("aniRow" + animals[i].name + i);
 									let row = $('#aniRow' + animals[i].name + i);
 									row.remove();
 								//deletes from the dropdown
-								  	document.getElementById(animals[i]._id).selected = true;
+								  	$('#' + animals[i]._id).prop('selected', true);
 								  	$("#animalList :selected").remove();
 									currDeleted++;
 			}
@@ -106,7 +104,6 @@ $(document.body).append(table);
 									},
 							success: function(data, textStatus){
 										var animalList = data;
-											var drop_val = document.getElementById(animals[i]._id)
 											var drop_val = $('#' + animals[i]._id);
 											new_name.html(editName.val());
 											new_description.contents()[0].nodeValue = editDescription.val();

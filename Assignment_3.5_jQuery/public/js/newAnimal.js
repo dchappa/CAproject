@@ -1,11 +1,3 @@
-// var xhttp = new XMLHttpRequest();
-//
-// var addBtn = document.createElement("button");
-// 	addBtn.id = "addBtn";
-// 	addBtn.style.height = "25px";
-// 	addBtn.style.width = "50px";
-// 	addBtn.innerHTML = "Add";
-
 	var addBtn = $('<button>');
 	addBtn.attr({
 		id: 'confirm' + i,
@@ -16,30 +8,19 @@
 	});
 	addBtn.html("Add");
 
-//
-// var animalEntry = document.createElement("INPUT");
-// animalEntry.id = "animalEntry"
-// animalEntry.setAttribute("type", "text");
-// animalEntry.value = "Animal Name";
-
 var animalEntry = $('<input>');
 animalEntry.attr({
 	id: 'animalEntry',
-	type: 'text',
-	value: "Animal Name"
-})
+	type: 'text'
+}).val('Animal Name')
 
-var descriptionEntry = document.createElement("INPUT");
-descriptionEntry.id = "descriptionEntry"
-descriptionEntry.setAttribute("type", "text");
-descriptionEntry.value = "Description";
 
 var descriptionEntry = $('<input>');
 descriptionEntry.attr({
 	id: 'descriptionEntry',
-	type: 'text',
-	value: "Description"
-});
+	type: 'text'
+}).val('Description')
+
 addBtn.click(function(){
 			$.ajax({
 				type: "POST",
@@ -84,11 +65,10 @@ function addAnimal(name, description, deleteBtn, editBtn){
 	  	// This will append it to the dropdown list
 	  	list =  $("#animalList");
 	  	let new_animal = $('<option>');
-	    new_animal.append(document.createTextNode(name));
+			new_animal.text(name);
 			new_animal.attr({
 				id: animals[animals.length-1]._id,
-				value: description
-			});
+			}).val(description);
 	    list.append(new_animal);
 	    deleteButtonListener(animals.length-1);
 		editButtonListener(animals.length-1);
@@ -103,12 +83,11 @@ function deleteButtonListener(aniIndex){
 						success: function(result){
 								var animalList = result;
 									//deletes from the table
-									let aniTable = $("#aniTable");
-									let row = $('#aniRow' + animals[aniIndex].name + (aniIndex))
-									row.remove();
+											let row = $('#aniRow' + animals[aniIndex].name + (aniIndex))
+											row.remove();
 									//deletes from the dropdown
-								  	document.getElementById(animals[aniIndex]._id).selected = true;
-								  		$("#animalList :selected").remove();
+										  $('#' + animals[i]._id).prop('selected', true);
+										  $("#animalList :selected").remove();
 								}
 					})
 				})
@@ -158,15 +137,14 @@ function editButtonListener(aniIndex){
 						url: "http://localhost:3000/animals/" + animals[aniIndex]._id,
 						dataType: "JSON",
 						data: {
-									'name': editName.value,
-									'description': editDescription.value
+									'name': editName.val(),
+									'description': editDescription.val()
 								},
 						success: function(result){
 									var animalList = result;
 										var drop_val = $('#' + animals[aniIndex]._id);
-										new_name.html(editName.value);
+										new_name.html(editName.val());
 										new_description.contents()[0].nodeValue = editDescription.val();
-									  	list = document.getElementById("animalList");
 								  		drop_val.html(editName.val());
 								  		drop_val.val(editDescription.val());
 											editName.css('display', 'none');
