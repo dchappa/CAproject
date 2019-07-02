@@ -1,176 +1,158 @@
-var xhttp = new XMLHttpRequest();
+// var xhttp = new XMLHttpRequest();
+//
+// var addBtn = document.createElement("button");
+// 	addBtn.id = "addBtn";
+// 	addBtn.style.height = "25px";
+// 	addBtn.style.width = "50px";
+// 	addBtn.innerHTML = "Add";
 
-var addBtn = document.createElement("button");
-	addBtn.id = "addBtn";
-	addBtn.style.height = "25px";
-	addBtn.style.width = "50px";
-	addBtn.innerHTML = "Add";
+	var addBtn = $('<button>');
+	addBtn.attr({
+		id: 'confirm' + i,
+	});
+	addBtn.css({
+		height: "25px",
+		width: "50px"
+	});
+	addBtn.html("Add");
 
+//
+// var animalEntry = document.createElement("INPUT");
+// animalEntry.id = "animalEntry"
+// animalEntry.setAttribute("type", "text");
+// animalEntry.value = "Animal Name";
 
-var animalEntry = document.createElement("INPUT");
-animalEntry.id = "animalEntry"
-animalEntry.setAttribute("type", "text");
-animalEntry.value = "Animal Name";
+var animalEntry = $('<input>');
+animalEntry.attr({
+	id: 'animalEntry',
+	type: 'text',
+	value: "Animal Name"
+})
 
 var descriptionEntry = document.createElement("INPUT");
 descriptionEntry.id = "descriptionEntry"
 descriptionEntry.setAttribute("type", "text");
 descriptionEntry.value = "Description";
-// var currDeleted = 0;
-addBtn.onclick = function(){
-		// 	xhttp.open("POST", "http://localhost:3000/animals", true);
-		// xhttp.setRequestHeader('Content-Type', 'application/json');
-		//
-		// xhttp.onreadystatechange = function () {
-		// 	if (xhttp.readyState == 4 && xhttp.status == "200") {
-		// 		console.table(xhttp.responseText);
-		// 		const value = JSON.parse(this.responseText);
-		// 		animals.push(value);
-		// 		var deleteBtn = document.createElement("button");
-		// 		deleteBtn.style.height = "25px";
-		// 		deleteBtn.style.width = "50px";
-		// 		deleteBtn.innerHTML = "Delete";
-		//
-		// 		var editBtn = document.createElement("button");
-		// 		editBtn.style.height = "25px";
-		// 		editBtn.style.width = "50px";
-		// 		editBtn.innerHTML = "Edit";
-		// 	addAnimal(animalEntry.value, descriptionEntry.value, deleteBtn, editBtn);
-		// 	}
-		// };
+
+var descriptionEntry = $('<input>');
+descriptionEntry.attr({
+	id: 'descriptionEntry',
+	type: 'text',
+	value: "Description"
+});
+addBtn.click(function(){
 			$.ajax({
 				type: "POST",
 				dataType: 'JSON',
 				url: "http://localhost:3000/animals",
 				data: {
-							'name': animalEntry.value,
-							'description': descriptionEntry.value
+							'name': animalEntry.val(),
+							'description': descriptionEntry.val()
 						},
 				success: function(response){
 							const value = response;
 							animals.push(value);
-							var deleteBtn = document.createElement("button");
-							deleteBtn.style.height = "25px";
-							deleteBtn.style.width = "50px";
-							deleteBtn.innerHTML = "Delete";
+							var deleteBtn = $('<button>');
+							deleteBtn.css({'height': 25, 'width':50});
+							deleteBtn.html("Delete");
 
-							var editBtn = document.createElement("button");
-							editBtn.style.height = "25px";
-							editBtn.style.width = "50px";
-							editBtn.innerHTML = "Edit";
-						addAnimal(animalEntry.value, descriptionEntry.value, deleteBtn, editBtn);
+							var editBtn = $('<button>');
+							editBtn.css({'height': 25, 'width':50});
+							editBtn.html("Edit");
+						addAnimal(animalEntry.val(), descriptionEntry.val(), deleteBtn, editBtn);
 				}
 			})
-		// var data = '{"name":"' + animalEntry.value + '", "description":"' + descriptionEntry.value + '"}';
-		// xhttp.send(data);
-
-
-	}
+	})
 
 function addAnimal(name, description, deleteBtn, editBtn){
-	var table = document.getElementById("aniTable");
-		let aniRow = document.createElement('tr');
-		aniRow.id = "aniRow" + name + (animals.length-1);
-	  	let tdName = document.createElement('td');
-	  	tdName.innerHTML = name;
-	  	tdName.id = animals[animals.length-1]._id + "name"
-	  	aniRow.appendChild(tdName);
-	  	var tdDescription = document.createElement('td');
-	  	tdDescription.innerHTML = description;
-	  	tdDescription.id = animals[animals.length-1]._id + "description"
-	  	deleteBtn.id = "delete" + (animals.length-1);
-	  	editBtn.id = "edit" + (animals.length-1);
-	  	tdDescription.appendChild(deleteBtn);
-	  	tdDescription.appendChild(editBtn);
-	  	aniRow.appendChild(tdDescription);
-	  	table.appendChild(aniRow);
+	var table = $('#aniTable');
+	let aniRow = $('<tr>');
+		aniRow.attr('id' , "aniRow" + name + (animals.length-1));
+		let tdName = $('<td>');
+	  	tdName.html(name);
+	  	tdName.attr('id' , animals[animals.length-1]._id + "name");
+	  	aniRow.append(tdName);
+			let tdDescription = $('<td>');
+	  	tdDescription.html(description);
+	  	tdDescription.attr('id' , animals[animals.length-1]._id + "description")
+	  	deleteBtn.attr('id' ,"delete" + (animals.length-1));
+	  	editBtn.attr('id' ,"edit" + (animals.length-1));
+	  	tdDescription.append(deleteBtn);
+	  	tdDescription.append(editBtn);
+	  	aniRow.append(tdDescription);
+	  	table.append(aniRow);
 	  	// This will append it to the dropdown list
-	  	list = document.getElementById("animalList");
-	  	let new_animal = document.createElement('option');
-	    new_animal.appendChild(document.createTextNode(name));
-	    new_animal.id = animals[animals.length-1]._id;
-	    new_animal.value = description;
-	    list.appendChild(new_animal);
+	  	list =  $("#animalList");
+	  	let new_animal = $('<option>');
+	    new_animal.append(document.createTextNode(name));
+			new_animal.attr({
+				id: animals[animals.length-1]._id,
+				value: description
+			});
+	    list.append(new_animal);
 	    deleteButtonListener(animals.length-1);
 		editButtonListener(animals.length-1);
-			if (currDeleted != 0){
-				currDeleted--;
-			}
 }
 function deleteButtonListener(aniIndex){
-	// xhttpDel = new XMLHttpRequest();
-			let currButton = document.getElementById("delete" + aniIndex);
-			currButton.addEventListener("click", function(){
-					// xhttpDel.open("DELETE", "http://localhost:3000/animals/" + animals[aniIndex]._id, true);
-					// 	xhttpDel.onload = function () {
-					// 	var animalList = JSON.parse(xhttpDel.responseText);
-					// 	if (xhttpDel.readyState == 4 && xhttpDel.status == "200") {
-					// 		//deletes from the table
-					// 		let aniTable = document.getElementById("aniTable");
-					// 		let row = document.getElementById("aniRow" + animals[aniIndex].name + (aniIndex));
-					// 		aniTable.deleteRow(row.rowIndex);
-					//
-					// 		//deletes from the dropdown
-					// 	  	let list = document.getElementById("animalList");
-					// 	  	document.getElementById(animals[aniIndex]._id).selected = true;
-					// 	  	list.remove(list.selectedIndex);
-					// 		currDeleted++;
-					// 	} else {
-					// 		console.error(animalList);
-					// 	}
-					// }
-					// xhttpDel.send();
-
+			let currButton = $('#delete' + aniIndex)
+			currButton.click(function(){
 					$.ajax({
 						type: "DELETE",
+						dataType: 'JSON',
 						url: "http://localhost:3000/animals/" + animals[aniIndex]._id,
 						success: function(result){
 								var animalList = result;
 									//deletes from the table
-									let aniTable = document.getElementById("aniTable");
-									let row = document.getElementById("aniRow" + animals[aniIndex].name + (aniIndex));
-									aniTable.deleteRow(row.rowIndex);
+									let aniTable = $("#aniTable");
+									let row = $('#aniRow' + animals[aniIndex].name + (aniIndex))
+									row.remove();
 									//deletes from the dropdown
-								  	let list = document.getElementById("animalList");
 								  	document.getElementById(animals[aniIndex]._id).selected = true;
-								  	list.remove(list.selectedIndex);
-									currDeleted++;
+								  		$("#animalList :selected").remove();
 								}
 					})
 				})
 		}
+
 function editButtonListener(aniIndex){
-		let currButton = document.getElementById("edit" + aniIndex);
+			let currButton = $('#edit' + aniIndex)
 			let clicked = false;
-			currButton.addEventListener("click", function(){
+			currButton.click(function(){
 			if(!clicked){
-				xhttpEdit = new XMLHttpRequest();
 				clicked = true;
-				let row = document.getElementById(animals[aniIndex]._id + "description");
-				let new_name = document.getElementById(animals[aniIndex]._id + "name");
-				let new_description = document.getElementById(animals[aniIndex]._id + "description");
+				let row = $('#' + animals[aniIndex]._id + "description");
+				let new_name = $('#' + animals[aniIndex]._id + "name");
+				let new_description = $('#' + animals[aniIndex]._id + "description");
 
-				var editName = document.createElement("INPUT");
-				editName.id = "editName"
-				editName.setAttribute("type", "text");
-				editName.value = new_name.innerHTML;
+				var editName = $('<input>');
+				editName.attr({
+					id: 'editName',
+					type: 'text'
+				}).val(new_name.html())
 
-				var editDescription = document.createElement("INPUT");
-				editDescription.id = "editDescription"
-				editDescription.setAttribute("type", "text");
-				editDescription.value = new_description.childNodes[0].textContent;
+				var editDescription = $('<input>');
+				editDescription.attr({
+					id: 'editDescription',
+					type: 'text'
+				}).val(new_description.contents()[0].nodeValue);
 
-				row.appendChild(editName);
-				row.appendChild(editDescription);
+				row.append(editName);
+				row.append(editDescription);
 
-				let confirmBtn = document.createElement("button");
-				confirmBtn.id = "confirm" + aniIndex;
-				confirmBtn.style.height = "25px";
-				confirmBtn.style.width = "60px";
-				confirmBtn.innerHTML = "Confirm";
-				row.appendChild(confirmBtn);
+				let confirmBtn = $('<button>');
+				confirmBtn.attr({
+					id: 'confirm' + aniIndex,
+				});
+				confirmBtn.css({
+					height: "25px",
+					width: "60px"
+				});
 
-				confirmBtn.addEventListener("click", function(){
+				confirmBtn.html("Confirm");
+
+				row.append(confirmBtn);
+
+				confirmBtn.click(function(){
 					$.ajax({
 						type: "PUT",
 						url: "http://localhost:3000/animals/" + animals[aniIndex]._id,
@@ -181,26 +163,26 @@ function editButtonListener(aniIndex){
 								},
 						success: function(result){
 									var animalList = result;
-										var drop_val = document.getElementById(animals[aniIndex]._id);
-										new_name.innerHTML = editName.value;
-										new_description.childNodes[0].textContent = editDescription.value;
+										var drop_val = $('#' + animals[aniIndex]._id);
+										new_name.html(editName.value);
+										new_description.contents()[0].nodeValue = editDescription.val();
 									  	list = document.getElementById("animalList");
-								  		drop_val.innerHTML = editName.value;
-								  		drop_val.value = editDescription.value;
-								  		editName.style.display = "none";
-									  	editDescription.style.display = "none";
-									  	confirmBtn.style.display = "none";
+								  		drop_val.html(editName.val());
+								  		drop_val.val(editDescription.val());
+											editName.css('display', 'none');
+											editDescription.css('display', 'none');
+											confirmBtn.css('display', 'none');
 									  	clicked = false;
 									}
 					})
 			});
-			row.appendChild(confirmBtn);
+			row.append(confirmBtn);
 	}
 })
 }
 
 
-var body = document.getElementsByTagName("body")[0];
-body.appendChild(addBtn);
-body.appendChild(animalEntry);
-body.appendChild(descriptionEntry);
+var body = $('body');
+body.append(addBtn);
+body.append(animalEntry);
+body.append(descriptionEntry);

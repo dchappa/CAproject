@@ -1,159 +1,124 @@
 var xhttp = new XMLHttpRequest();
 
-var table = document.createElement('table')
-table.align = "center";
-table.id = "aniTable";
-var row = document.createElement('tr')
-var animalName = document.createElement('th');
-animalName.innerHTML = "Name";
-var animalDescription = document.createElement('th');
-animalDescription.innerHTML = "Description";
-row.appendChild(animalName);
-row.appendChild(animalDescription);
-table.appendChild(row);
+var table = $('<table>');
+table.css('align', 'center');
+table.attr('id', "aniTable");
+var row = $('<tr>');
+var animalName = $('<th>');
+animalName.html("Name");
+var animalDescription = $('<th>');
+animalDescription.html("Description");
+row.append(animalName);
+row.append(animalDescription);
+table.append(row);
 
 for(var i in animals){
-let aniRow = document.createElement('tr');
-	aniRow.id = "aniRow" + animals[i].name + i;
-  let tdName = document.createElement('td');
-  tdName.innerHTML = animals[i].name;
-  tdName.id = animals[i]._id + "name";
-  aniRow.appendChild(tdName);
-  let tdDescription = document.createElement('td');
-  tdDescription.innerHTML = animals[i].description;
-  tdDescription.id = animals[i]._id + "description";
-  animalDescription.appendChild(tdDescription);
-  aniRow.appendChild(tdDescription);
-  var deleteBtn = document.createElement("button");
-	deleteBtn.id = "delete" + i;
-	deleteBtn.style.height = "25px";
-	deleteBtn.style.width = "50px";
-	deleteBtn.innerHTML = "Delete";
-	var editBtn = document.createElement("button");
-	editBtn.id = "edit" + i;
-	editBtn.style.height = "25px";
-	editBtn.style.width = "50px";
-	editBtn.innerHTML = "Edit";
-  	tdDescription.appendChild(deleteBtn);
-  	tdDescription.appendChild(editBtn);
-  table.appendChild(aniRow);
+	let aniRow = $('<tr>');
+	aniRow.attr('id', "aniRow" + animals[i].name + i);
+  let tdName = $('<td>');
+  tdName.html(animals[i].name);
+  tdName.attr('id', animals[i]._id + "name");
+  aniRow.append(tdName);
+  let tdDescription = $('<td>');
+  tdDescription.html(animals[i].description);
+  tdDescription.attr('id', animals[i]._id + "description");
+  animalDescription.append(tdDescription);
+  aniRow.append(tdDescription);
+  var deleteBtn = $('<button>');
+	deleteBtn.attr('id', "delete" + i)
+	deleteBtn.css({'height': 25, 'width':50});
+	deleteBtn.html("Delete");
+	var editBtn = $('<button>');
+	editBtn.attr('id', "edit" + i);
+	editBtn.css({'height': 25, 'width':50});
+	editBtn.html("Edit");
+  	tdDescription.append(deleteBtn);
+  	tdDescription.append(editBtn);
+  table.append(aniRow);
 }
 
-document.body.appendChild(table);
+$(document.body).append(table);
 
 	for(let i in animals){
-		// delXHTTP = new XMLHttpRequest();
-		let currButton = document.getElementById("delete" + i);
-		currButton.addEventListener("click", function(){
-		// 		delXHTTP.open("DELETE", "http://localhost:3000/animals/" + animals[i]._id, true);
-		// 			delXHTTP.onload = function () {
-		// 			let animalList = JSON.parse(delXHTTP.responseText);
-		// 			if (delXHTTP.readyState == 4 && delXHTTP.status == "200") {
-		// 				//deletes from the table
-		// 					let aniTable = document.getElementById("aniTable");
-		// 					let row = document.getElementById("aniRow" + animals[i].name + i);
-		// 					aniTable.deleteRow(row.rowIndex);
-		// 				//deletes from the dropdown
-		// 				  	let list = document.getElementById("animalList");
-		// 				  	document.getElementById(animals[i]._id).selected = true;
-		// 				  	 list.remove(list.selectedIndex);
-		// 					currDeleted++;
-		// 			} else {
-		// 				console.error(animalList);
-		// 			}
-		// 		}
-		// 		delXHTTP.send();
+		let currButton = $('#delete'+i);
+		currButton.click( function(){
 		$.ajax({
 			url: "http://localhost:3000/animals/" + animals[i]._id,
 			type: "DELETE",
 			dataType: "json",
 			success: function(result){
-				let aniTable = document.getElementById("aniTable");
-									let row = document.getElementById("aniRow" + animals[i].name + i);
-									aniTable.deleteRow(row.rowIndex);
+									let aniTable = $('#aniTable');
+									// let row = document.getElementById("aniRow" + animals[i].name + i);
+									let row = $('#aniRow' + animals[i].name + i);
+									row.remove();
 								//deletes from the dropdown
-								  	let list = document.getElementById("animalList");
 								  	document.getElementById(animals[i]._id).selected = true;
-								  	 list.remove(list.selectedIndex);
+								  	$("#animalList :selected").remove();
 									currDeleted++;
 			}
 		})
 	});
 
-		let editButton = document.getElementById("edit" + i);
+		let editButton = $('#edit' + i);
 		let clicked = false;
-		editButton.addEventListener("click", function(){
+		editButton.click(function(){
 			if(!clicked){
-				xhttpEdit = new XMLHttpRequest();
 				clicked = true;
-				let row = document.getElementById(animals[i]._id + "description");
-				let new_name = document.getElementById(animals[i]._id + "name");
-				let new_description = document.getElementById(animals[i]._id + "description");
+				let row = $('#' + animals[i]._id + "description");
+				let new_name = $('#' + animals[i]._id + "name");
+				let new_description = $('#' + animals[i]._id + "description");
 
-				var editName = document.createElement("INPUT");
-				editName.id = "editName"
-				editName.setAttribute("type", "text");
-				editName.value = new_name.innerHTML;
+				var editName = $('<input>');
+				editName.attr({
+					id: 'editName',
+					type: 'text'
+				}).val(new_name.html());
 
-				var editDescription = document.createElement("INPUT");
-				editDescription.id = "editDescription"
-				editDescription.setAttribute("type", "text");
-				editDescription.value = new_description.childNodes[0].textContent;
+				var editDescription = $('<input>');
+				editDescription.attr({
+					id: 'editDescription',
+					type: 'text'
+				}).val(new_description.contents()[0].nodeValue);
 
-				row.appendChild(editName);
-				row.appendChild(editDescription);
+				row.append(editName);
+				row.append(editDescription);
 
-				let confirmBtn = document.createElement("button");
-				confirmBtn.id = "confirm" + i;
-				confirmBtn.style.height = "25px";
-				confirmBtn.style.width = "60px";
-				confirmBtn.innerHTML = "Confirm";
+				let confirmBtn = $('<button>');
+				confirmBtn.attr({
+					id: 'confirm' + i,
+				});
+				confirmBtn.css({
+					height: "25px",
+					width: "50px"
+				});
 
-				confirmBtn.addEventListener("click", function(){
-						// xhttpEdit.open("PUT", "http://localhost:3000/animals/" + animals[i]._id, true);
-						// xhttpEdit.setRequestHeader('Content-type','application/json; charset=utf-8');
-						// 	xhttpEdit.onload = function () {
-						// 		var animalList = JSON.parse(xhttpEdit.responseText);
-						// 		if (xhttpEdit.readyState == 4 && xhttpEdit.status == "200") {
-						// 			var drop_val = document.getElementById(animals[i]._id)
-						// 			new_name.innerHTML = editName.value;
-						// 			new_description.childNodes[0].textContent = editDescription.value;
-						// 			list = drop_val.innerHTML = editName.value;
-						//   			drop_val.value = editDescription.value;
-						// 	  		editName.style.display = "none";
-						// 	  		editDescription.style.display = "none";
-						// 	  		confirmBtn.style.display = "none";
-						// 	  		clicked = false;
-						// 	  		editName.value = new_name.innerHTML;
-						// 		} else {
-						// 			console.error(animalList);
-						// 		}
-						// 	}
-						// 	let data = '{"name":"' + editName.value + '", "description":"' + editDescription.value + '"}';
-						// 	xhttpEdit.send(data);
+				confirmBtn.html("Confirm");
+
+				confirmBtn.click(function(){
 						$.ajax({
 							url: "http://localhost:3000/animals/" + animals[i]._id,
 							type: 'PUT',
 							data: {
-										'name': editName.value,
-										'description': editDescription.value
+										'name': editName.val(),
+										'description': editDescription.val()
 									},
 							success: function(data, textStatus){
 										var animalList = data;
 											var drop_val = document.getElementById(animals[i]._id)
-											new_name.innerHTML = editName.value;
-											new_description.childNodes[0].textContent = editDescription.value;
-											list = drop_val.innerHTML = editName.value;
-								  			drop_val.value = editDescription.value;
-									  		editName.style.display = "none";
-									  		editDescription.style.display = "none";
-									  		confirmBtn.style.display = "none";
+											var drop_val = $('#' + animals[i]._id);
+											new_name.html(editName.val());
+											new_description.contents()[0].nodeValue = editDescription.val();
+											drop_val.html(editName.val());
+								  			drop_val.val(editDescription.val());
+												editName.css('display', 'none');
+									  		editDescription.css('display', 'none');
+									  		confirmBtn.css('display', 'none');
 									  		clicked = false;
-									  		editName.value = new_name.innerHTML;
+									  		editName.val(new_name.html());
 							}
 						})
 						});
-					row.appendChild(confirmBtn);
+					row.append(confirmBtn);
 			}
 		});
 }
