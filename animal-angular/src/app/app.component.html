@@ -1,0 +1,11 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>{{ title }}!</h1>
+  <h3>Pick an animal to see it's description!</h3>
+  <select ng-model="animal" ng-options="for animal in animals">
+</select>
+<app-animal-form></app-animal-form>
+</div>
+
+
+<router-outlet></router-outlet>
