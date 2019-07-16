@@ -18,7 +18,7 @@ export class AnimalFormComponent implements OnInit {
     addBtn = "Add Animal";
 
 
-  ngOnInit()
+  ngOnInit(){
     this.newService.GetAnimals().subscribe(data => this.Repdata = data)
   }
 
@@ -28,5 +28,4 @@ export class AnimalFormComponent implements OnInit {
   //     this.newS
   //   }
   //  }
-
 }

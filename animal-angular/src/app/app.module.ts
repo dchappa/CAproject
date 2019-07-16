@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AnimalComponent } from './animal/animal.component';
 import { AnimalFormComponent } from './animal-form/animal-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } form '@angular/forms'
+import { HttpModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { HttpModule } form '@angular/forms'
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [CommonService],
+  providers: [AnimalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
