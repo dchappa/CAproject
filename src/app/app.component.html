@@ -1,0 +1,33 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>{{ title }}!</h1>
+  <h3>Pick an animal to see it's description!</h3>
+  <select ng-model="animal" ng-options="for animal in animals">
+</select>
+
+  <div class="ui raised segment">
+    <h2 class="ui header">Enter an animal here!</h2>
+      <form [formGroup]="form"
+          (ngSubmit)="onAdd(form.value)"
+          class="ui form">
+
+          <div class="field">
+            <label for="aniInput">Animal Name</label>
+            <input type="text" id="aniInput"
+           placeholder="Animal"
+           [formControl]="form.controls['Animal']">
+         </div>
+         <button type="submit" class="ui button" value="{{addBtn}}"></button>
+       </form>
+
+       <table>
+           <th>Name</th>
+           <th>Description</th>
+           <tr ng-repeat="animal in animals">
+        </tr>
+        </table>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
