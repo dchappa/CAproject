@@ -20,7 +20,7 @@ export class AnimalService {
   // getAnimals(): Observable<Animal[]> {
   //   return of(ANIMALS);
   // }
-  getAnimals() {
+  getAnimals(): Observable<Animal[]> {
     return this.http.get('http://localhost:3000/animals')
       .pipe(map((reponse: Response) => reponse.json()))
   }

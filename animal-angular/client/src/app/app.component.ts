@@ -12,6 +12,7 @@ export class AppComponent {
   animalForm: FormGroup;
   animalName: FormControl;
   addAnimal: FormControl;
+  animals: Objects[];
 
   constructor(private aniService : AnimalService, private formBuilder : FormBuilder){
     this.animalForm = this.formBuilder.group({
@@ -19,10 +20,8 @@ export class AppComponent {
       description: [''],
       animalName: new FormControl(''),
       addAnimal: new FormControl(''),
-
     });
-    // this.animalForm.valueChanges.subscribe(data=>this.animalForm.animalFormOnDataChange(data));
-
+    animals = this.aniService.getAnimals();
   }
   addBtn = "Add Animal";
 
