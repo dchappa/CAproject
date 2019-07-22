@@ -16,7 +16,7 @@ export class AnimalComponent implements OnInit {
 
   getAnimals(): void {
         this.animalService.getAnimals()
-            .subscribe(animals => this.animals = animals)
+            // .pipe(subscribe(animals => this.animals = animals))
   }
 
   ngOnInit() {

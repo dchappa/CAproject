@@ -7,22 +7,38 @@
 
   <div class="ui raised segment">
     <h2 class="ui header">Enter an animal here!</h2>
-      <form [formGroup]="form"
-          (ngSubmit)="onAdd(form.value)"
-          class="ui form">
-
+      <form [formGroup]="animalForm"
+          (ngSubmit)="onAdd(animalForm.value)"
+          class="ui form" >
           <div class="field">
             <label for="aniInput">Animal Name</label>
             <input type="text" id="aniInput"
-           placeholder="Animal"
-           [formControl]="form.controls['Animal']">
+           placeholder="Animal Name"
+           formControlName="animalName">
+           <input type="button" class="ui button" value="{{addBtn}}" formControlName="addAnimal">
+           <select>
+             <option value="">
+             <option value="Red">Red
+             <option value="Blue">Blue
+             <option value="Green">Green
+             <option value="Brown">Brown
+          </select>
+          <select>
+            <option value="">
+            <option value="Small">Small
+            <option value="Medium">Medium
+            <option value="Large">Large
+            <option value="super-sized">Super-Sized
+          </select>
+          <input type="date">
          </div>
-         <button type="submit" class="ui button" value="{{addBtn}}"></button>
        </form>
 
        <table>
            <th>Name</th>
-           <th>Description</th>
+           <th>Color</th>
+           <th>Size</th>
+           <th>DOB</th>
            <tr ng-repeat="animal in animals">
         </tr>
         </table>

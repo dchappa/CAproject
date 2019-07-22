@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Animal } from './animal/animal.model';
-import { FormGroup, FormControl, Validators, FormsModule } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,Validators, FormsModule } from '@angular/forms';
 import { AnimalService } from './animal.service';
 
 @Component({
@@ -9,9 +9,20 @@ import { AnimalService } from './animal.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  animalForm: FormGroup;
+  animalName: FormControl;
+  addAnimal: FormControl;
 
-  constructor(private aniService : AnimalService,){
-    // Repdata;
+  constructor(private aniService : AnimalService, private formBuilder : FormBuilder){
+    this.animalForm = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      description: [''],
+      animalName: new FormControl(''),
+      addAnimal: new FormControl(''),
+
+    });
+    // this.animalForm.valueChanges.subscribe(data=>this.animalForm.animalFormOnDataChange(data));
+
   }
   addBtn = "Add Animal";
 

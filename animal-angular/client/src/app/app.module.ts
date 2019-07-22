@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnimalComponent } from './animal/animal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AnimalService } from './animal.service';
 
 @NgModule({
@@ -17,7 +17,8 @@ import { AnimalService } from './animal.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [AnimalService],
   bootstrap: [AppComponent]
