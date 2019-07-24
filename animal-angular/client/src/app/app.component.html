@@ -39,9 +39,13 @@
            <th>Color</th>
            <th>Size</th>
            <th>DOB</th>
-           <tr ng-repeat="animal in animals">
+           <tr *ngFor="let animal of animals; let ind = index">
+             <td>{{animal.name}}</td>
+             <td>{{animal.color}}</td>
+             <td>{{animal.size}}</td>
+             <td>{{animal.dob}}</td>
         </tr>
-        </table>
+      </table>
   </div>
 </div>
 

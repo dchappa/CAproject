@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Animal } from './animal/animal.model';
 import { FormGroup, FormControl, FormBuilder,Validators, FormsModule } from '@angular/forms';
 import { AnimalService } from './animal.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   animalForm: FormGroup;
   animalName: FormControl;
   addAnimal: FormControl;
-  animals: Objects[];
+  animals;
 
   constructor(private aniService : AnimalService, private formBuilder : FormBuilder){
     this.animalForm = this.formBuilder.group({
@@ -21,12 +22,13 @@ export class AppComponent {
       animalName: new FormControl(''),
       addAnimal: new FormControl(''),
     });
-    animals = this.aniService.getAnimals();
+
+    this.aniService.getAnimals().subscribe(result => {console.log(result); this.animals = result});
   }
   addBtn = "Add Animal";
 
   ngOnInit(){
-    this.aniService.getAnimals()
+    // this.aniService.getAnimals()
   }
 
 

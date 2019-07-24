@@ -10,16 +10,4 @@ export class Animal{
     this.size = size;
     this.dob = dob;
   }
-
-  // addAnimal(){
-  //
-  // }
-  //
-  // deleteAnimal(){
-  //
-  // }
-  //
-  // editAnimal(){
-  //
-  // }
 }

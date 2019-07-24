@@ -15,8 +15,7 @@ export class AnimalComponent implements OnInit {
   constructor(private animalService: AnimalService) { }
 
   getAnimals() {
-        console.log(this.animalService.getAnimals())
-            // .pipe(subscribe(animals => this.animals = animals))
+        console.log(this.animalService.getAnimals().subscribe(result => {console.log(result); result}))
   }
 
   ngOnInit() {
