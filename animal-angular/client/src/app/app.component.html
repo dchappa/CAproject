@@ -2,35 +2,39 @@
 <div style="text-align:center">
   <h1>{{ title }}!</h1>
   <h3>Pick an animal to see it's description!</h3>
-  <select ng-model="animal" ng-options="for animal in animals">
-</select>
+  <select [(ngModel)]="selectedAnimal">
+      <option *ngFor="let animal of animals" [ngValue]="animal">
+        {{animal.name}}
+      </option>
+  </select>
+  <p *ngIf="selectedAnimal">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>
 
   <div class="ui raised segment">
     <h2 class="ui header">Enter an animal here!</h2>
       <form [formGroup]="animalForm"
-          (ngSubmit)="onAdd(animalForm.value)"
+          (ngSubmit)="addAnimal(animalForm.value)"
           class="ui form" >
           <div class="field">
             <label for="aniInput">Animal Name</label>
             <input type="text" id="aniInput"
            placeholder="Animal Name"
            formControlName="animalName">
-           <input type="button" class="ui button" value="{{addBtn}}" formControlName="addAnimal">
-           <select>
+           <input type="submit" class="ui button" value="{{addBtn}}" formControlName="addButton">
+           <select formControlName="animalColor">
              <option value="">
              <option value="Red">Red
              <option value="Blue">Blue
              <option value="Green">Green
              <option value="Brown">Brown
           </select>
-          <select>
+          <select formControlName="animalSize">
             <option value="">
             <option value="Small">Small
             <option value="Medium">Medium
             <option value="Large">Large
             <option value="super-sized">Super-Sized
           </select>
-          <input type="date">
+          <input type="date" formControlName="animalDOB">
          </div>
        </form>
 
@@ -39,7 +43,7 @@
            <th>Color</th>
            <th>Size</th>
            <th>DOB</th>
-           <tr *ngFor="let animal of animals; let ind = index">
+           <tr *ngFor="let animal of animals">
              <td>{{animal.name}}</td>
              <td>{{animal.color}}</td>
              <td>{{animal.size}}</td>

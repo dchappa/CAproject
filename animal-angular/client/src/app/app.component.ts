@@ -12,7 +12,10 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   animalForm: FormGroup;
   animalName: FormControl;
-  addAnimal: FormControl;
+  addButton: FormControl;
+  animalColor: FormControl;
+  animalSize: FormControl;
+  animalDOB: FormControl;
   animals;
 
   constructor(private aniService : AnimalService, private formBuilder : FormBuilder){
@@ -20,7 +23,10 @@ export class AppComponent {
       title: ['', [Validators.required, Validators.minLength(5)]],
       description: [''],
       animalName: new FormControl(''),
-      addAnimal: new FormControl(''),
+      addButton: new FormControl(''),
+      animalColor: new FormControl(''),
+      animalSize: new FormControl(''),
+      animalDOB: new FormControl(''),
     });
 
     this.aniService.getAnimals().subscribe(result => {console.log(result); this.animals = result});
@@ -29,6 +35,15 @@ export class AppComponent {
 
   ngOnInit(){
     // this.aniService.getAnimals()
+  }
+
+  addAnimal(animalData) {
+    console.log(animalData);
+    // let animal = '{"name":"' + animalData.animalName + '", "color":"' + animalData.animalColor + '", "size":"' + animalData.animalSize
+    // + '", "dob":"' + animalData.animalDOB + '"}'
+    let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
+    this.aniService.addAnimal(animal).subscribe(response => console.log(response),
+                                                err => console.log(err));
   }
 
 
