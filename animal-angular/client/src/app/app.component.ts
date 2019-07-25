@@ -34,16 +34,19 @@ export class AppComponent {
   addBtn = "Add Animal";
 
   ngOnInit(){
-    // this.aniService.getAnimals()
+    this.aniService.getAnimals()
   }
 
   addAnimal(animalData) {
     console.log(animalData);
-    // let animal = '{"name":"' + animalData.animalName + '", "color":"' + animalData.animalColor + '", "size":"' + animalData.animalSize
-    // + '", "dob":"' + animalData.animalDOB + '"}'
     let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
-    this.aniService.addAnimal(animal).subscribe(response => console.log(response),
+    console.log(animal);
+    this.aniService.addAnimal(animal).subscribe(response => {console.log(response); this.animals.push(response);},
                                                 err => console.log(err));
+  }
+
+  deleteAnimal(){
+    
   }
 
 
