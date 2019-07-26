@@ -41,7 +41,7 @@ module.exports = "<p>animal works!</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>{{ title }}!</h1>\n  <h3>Pick an animal to see it's description!</h3>\n  <select [(ngModel)]=\"selectedAnimal\">\n      <option *ngFor=\"let animal of animals\" [ngValue]=\"animal\">\n        {{animal.name}}\n      </option>\n  </select>\n  <p *ngIf=\"selectedAnimal\">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>\n\n  <div class=\"ui raised segment\">\n    <h2 class=\"ui header\">Enter an animal here!</h2>\n      <form [formGroup]=\"animalForm\"\n          (ngSubmit)=\"addAnimal(animalForm.value)\"\n          class=\"ui form\" >\n          <div class=\"field\">\n            <label for=\"aniInput\">Animal Name</label>\n            <input type=\"text\" id=\"aniInput\"\n           placeholder=\"Animal Name\"\n           formControlName=\"animalName\">\n           <input type=\"submit\" class=\"ui button\" value=\"{{addBtn}}\" formControlName=\"addButton\">\n           <select formControlName=\"animalColor\">\n             <option value=\"\">\n             <option value=\"Red\">Red\n             <option value=\"Blue\">Blue\n             <option value=\"Green\">Green\n             <option value=\"Brown\">Brown\n          </select>\n          <select formControlName=\"animalSize\">\n            <option value=\"\">\n            <option value=\"Small\">Small\n            <option value=\"Medium\">Medium\n            <option value=\"Large\">Large\n            <option value=\"Super-Sized\">Super-Sized\n          </select>\n          <input type=\"date\" formControlName=\"animalDOB\">\n         </div>\n       </form>\n\n       <table>\n           <th>Name</th>\n           <th>Color</th>\n           <th>Size</th>\n           <th>DOB</th>\n           <tr *ngFor=\"let animal of animals\">\n             <td>{{animal.name}}</td>\n             <td>{{animal.color}}</td>\n             <td>{{animal.size}}</td>\n             <td>{{animal.dob}}</td>\n        </tr>\n      </table>\n  </div>\n</div>\n\n\n<router-outlet></router-outlet>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>{{ title }}!</h1>\n  <h3>Pick an animal to see it's description!</h3>\n  <select [(ngModel)]=\"selectedAnimal\">\n      <option *ngFor=\"let animal of animals\" [ngValue]=\"animal\">\n        {{animal.name}}\n      </option>\n  </select>\n  <p *ngIf=\"selectedAnimal\">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>\n\n  <div class=\"ui raised segment\">\n    <h2 class=\"ui header\">Enter an animal here!</h2>\n      <form [formGroup]=\"animalForm\"\n          (ngSubmit)=\"addAnimal(animalForm.value)\"\n          class=\"ui form\" >\n          <div class=\"field\">\n            <label for=\"aniInput\">Animal Name</label>\n            <input type=\"text\" id=\"aniInput\"\n           placeholder=\"Animal Name\"\n           formControlName=\"animalName\">\n           <input type=\"submit\" class=\"ui button\" value=\"{{addBtn}}\" formControlName=\"addButton\">\n           <select formControlName=\"animalColor\">\n             <option value=\"\">\n             <option value=\"Red\">Red\n             <option value=\"Blue\">Blue\n             <option value=\"Green\">Green\n             <option value=\"Brown\">Brown\n          </select>\n          <select formControlName=\"animalSize\">\n            <option value=\"\">\n            <option value=\"Small\">Small\n            <option value=\"Medium\">Medium\n            <option value=\"Large\">Large\n            <option value=\"Super-Sized\">Super-Sized\n          </select>\n          <input type=\"date\" formControlName=\"animalDOB\">\n         </div>\n       </form>\n\n       <table style=\"text-align:center\" align=\"center\">\n           <th>Name</th>\n           <th>Color</th>\n           <th>Size</th>\n           <th>DOB</th>\n           <tr *ngFor=\"let animal of animals\">\n             <td>{{animal.name}}</td>\n             <td>{{animal.color}}</td>\n             <td>{{animal.size}}</td>\n             <td>{{animal.dob}}</td>\n             <td>\n               <input type=\"button\" class=\"ui button\" value={{editBtn}} (click)=\"onClickOpenForm()\">\n               <form *ngIf=\"openEdit\" [formGroup]=\"editForm\"\n                   (ngSubmit)=\"editAnimal(animal, editForm.value)\"\n                   class=\"ui form\">\n                   <div class=\"field\">\n                     <label for=\"editInput\">Animal Name</label>\n                     <input type=\"text\" id=\"editInput\"\n                    placeholder=\"Animal Name\"\n                    formControlName=\"editName\">\n                    <select formControlName=\"editColor\">\n                      <option value=\"\">\n                      <option value=\"Red\">Red\n                      <option value=\"Blue\">Blue\n                      <option value=\"Green\">Green\n                      <option value=\"Brown\">Brown\n                   </select>\n                   <select formControlName=\"editSize\">\n                     <option value=\"\">\n                     <option value=\"Small\">Small\n                     <option value=\"Medium\">Medium\n                     <option value=\"Large\">Large\n                     <option value=\"Super-Sized\">Super-Sized\n                   </select>\n                   <input type=\"date\" formControlName=\"editDOB\">\n                  </div>\n                  <input type=\"button\" class=\"ui button\" value={{cancelBtn}} (click)=\"onClickCloseForm()\">\n                  <input type=\"submit\" class=\"ui button\" value=\"{{confirmBtn}}\" formControlName=\"confirmButton\" >\n                </form>\n            </td>\n            <td>\n              <input type=\"button\" class=\"ui button\" value={{delBtn}} (click)=\"deleteAnimal(animal)\">\n           </td>\n         </tr>\n      </table>\n  </div>\n</div>\n\n\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -75,7 +75,6 @@ var AnimalService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new Error(e)); }));
     };
     AnimalService.prototype.addAnimal = function (animal) {
-        console.log(animal);
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -83,6 +82,23 @@ var AnimalService = /** @class */ (function () {
             })
         };
         return this.http.post('http://localhost:3000/animals', animal, httpOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new Error(e)); }));
+    };
+    AnimalService.prototype.deleteAnimal = function (animalID) {
+        console.log(animalID);
+        return this.http.delete('http://localhost:3000/animals/' + animalID)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new Error(e)); }));
+    };
+    AnimalService.prototype.editAnimal = function (animal, animalID) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': 'my-auth-token'
+            })
+        };
+        console.log(animalID);
+        console.log(animal);
+        return this.http.put('http://localhost:3000/animals/' + animal._id, animalID, httpOptions)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(new Error(e)); }));
     };
     AnimalService.ctorParameters = function () { return [
@@ -225,27 +241,73 @@ var AppComponent = /** @class */ (function () {
         this.aniService = aniService;
         this.formBuilder = formBuilder;
         this.addBtn = "Add Animal";
+        this.editBtn = "Edit";
+        this.delBtn = "Delete";
+        this.confirmBtn = "Confirm";
+        this.cancelBtn = "Cancel";
         this.title = 'All about animals';
         this.animalForm = this.formBuilder.group({
-            title: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(5)]],
-            description: [''],
             animalName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             addButton: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             animalColor: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             animalSize: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             animalDOB: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
         });
-        this.aniService.getAnimals().subscribe(function (result) { console.log(result); _this.animals = result; });
+        this.editForm = this.formBuilder.group({
+            title: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(5)]],
+            description: [''],
+            editName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            confirmButton: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            editColor: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            editSize: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            editDOB: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+        });
+        this.aniService.getAnimals().subscribe(function (result) { _this.animals = result; });
+        this.openEdit = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         this.aniService.getAnimals();
     };
     AppComponent.prototype.addAnimal = function (animalData) {
         var _this = this;
-        console.log(animalData);
         var animal = JSON.stringify({ color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize });
+        this.aniService.addAnimal(animal).subscribe(function (response) { _this.animals.push(response); }, function (err) { return console.log(err); });
+    };
+    AppComponent.prototype.deleteAnimal = function (animalData) {
+        var _this = this;
+        this.aniService.deleteAnimal(animalData._id).subscribe(function (response) { _this.delFromArray(animalData); }, function (err) { return console.log(err); });
+    };
+    AppComponent.prototype.editAnimal = function (animal, animalData) {
+        var _this = this;
         console.log(animal);
-        this.aniService.addAnimal(animal).subscribe(function (response) { console.log(response); _this.animals.push(response); }, function (err) { return console.log(err); });
+        console.log(animalData);
+        var newAnimal = JSON.stringify({ color: animalData.editColor, dob: animalData.editDOB, name: animalData.editName, size: animalData.editSize });
+        this.aniService.editAnimal(animal, newAnimal).subscribe(function (response) { return _this.editFromArray(animal, newAnimal); }, function (err) { return console.log(err); });
+    };
+    AppComponent.prototype.editFromArray = function (animal, newAnimal) {
+        var parsed = JSON.parse(newAnimal);
+        for (var currAnimal in this.animals) {
+            if (this.animals[parseInt(currAnimal)]._id == animal._id) {
+                this.animals[parseInt(currAnimal)].color = parsed.color;
+                this.animals[parseInt(currAnimal)].dob = parsed.dob;
+                this.animals[parseInt(currAnimal)].name = parsed.name;
+                this.animals[parseInt(currAnimal)].size = parsed.size;
+            }
+        }
+        this.openEdit = false;
+    };
+    AppComponent.prototype.delFromArray = function (animalData) {
+        for (var animal in this.animals) {
+            if (this.animals[parseInt(animal)]._id == animalData._id) {
+                this.animals.splice(parseInt(animal), 1);
+            }
+        }
+    };
+    AppComponent.prototype.onClickOpenForm = function () {
+        this.openEdit = true;
+    };
+    AppComponent.prototype.onClickCloseForm = function () {
+        this.openEdit = false;
     };
     AppComponent.ctorParameters = function () { return [
         { type: _animal_service__WEBPACK_IMPORTED_MODULE_3__["AnimalService"] },

@@ -38,7 +38,7 @@
          </div>
        </form>
 
-       <table>
+       <table style="text-align:center" align="center">
            <th>Name</th>
            <th>Color</th>
            <th>Size</th>
@@ -48,7 +48,40 @@
              <td>{{animal.color}}</td>
              <td>{{animal.size}}</td>
              <td>{{animal.dob}}</td>
-        </tr>
+             <td>
+               <input type="button" class="ui button" value={{editBtn}} (click)="onClickOpenForm()">
+               <form *ngIf="openEdit" [formGroup]="editForm"
+                   (ngSubmit)="editAnimal(animal, editForm.value)"
+                   class="ui form">
+                   <div class="field">
+                     <label for="editInput">Animal Name</label>
+                     <input type="text" id="editInput"
+                    placeholder="Animal Name"
+                    formControlName="editName">
+                    <select formControlName="editColor">
+                      <option value="">
+                      <option value="Red">Red
+                      <option value="Blue">Blue
+                      <option value="Green">Green
+                      <option value="Brown">Brown
+                   </select>
+                   <select formControlName="editSize">
+                     <option value="">
+                     <option value="Small">Small
+                     <option value="Medium">Medium
+                     <option value="Large">Large
+                     <option value="Super-Sized">Super-Sized
+                   </select>
+                   <input type="date" formControlName="editDOB">
+                  </div>
+                  <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm()">
+                  <input type="submit" class="ui button" value="{{confirmBtn}}" formControlName="confirmButton" >
+                </form>
+            </td>
+            <td>
+              <input type="button" class="ui button" value={{delBtn}} (click)="deleteAnimal(animal)">
+           </td>
+         </tr>
       </table>
   </div>
 </div>
