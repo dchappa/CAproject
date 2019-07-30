@@ -41,7 +41,7 @@ module.exports = "<p>animal works!</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>{{ title }}!</h1>\n  <h3>Pick an animal to see it's description!</h3>\n  <select [(ngModel)]=\"selectedAnimal\">\n      <option *ngFor=\"let animal of animals\" [ngValue]=\"animal\">\n        {{animal.name}}\n      </option>\n  </select>\n  <p *ngIf=\"selectedAnimal\">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>\n\n  <div class=\"ui raised segment\">\n    <h2 class=\"ui header\">Enter an animal here!</h2>\n      <form [formGroup]=\"animalForm\"\n          (ngSubmit)=\"addAnimal(animalForm.value)\"\n          class=\"ui form\" >\n          <div class=\"field\">\n            <label for=\"aniInput\">Animal Name</label>\n            <input type=\"text\" id=\"aniInput\"\n           placeholder=\"Animal Name\"\n           formControlName=\"animalName\">\n           <input type=\"submit\" class=\"ui button\" value=\"{{addBtn}}\" formControlName=\"addButton\">\n           <select formControlName=\"animalColor\">\n             <option value=\"\">\n             <option value=\"Red\">Red\n             <option value=\"Blue\">Blue\n             <option value=\"Green\">Green\n             <option value=\"Brown\">Brown\n          </select>\n          <select formControlName=\"animalSize\">\n            <option value=\"\">\n            <option value=\"Small\">Small\n            <option value=\"Medium\">Medium\n            <option value=\"Large\">Large\n            <option value=\"Super-Sized\">Super-Sized\n          </select>\n          <input type=\"date\" formControlName=\"animalDOB\">\n         </div>\n       </form>\n\n       <table style=\"text-align:center\" align=\"center\">\n           <th>Name</th>\n           <th>Color</th>\n           <th>Size</th>\n           <th>DOB</th>\n           <tr *ngFor=\"let animal of animals\">\n             <td>{{animal.name}}</td>\n             <td>{{animal.color}}</td>\n             <td>{{animal.size}}</td>\n             <td>{{animal.dob}}</td>\n             <td>\n               <input type=\"button\" class=\"ui button\" value={{editBtn}} (click)=\"onClickOpenForm()\">\n               <form *ngIf=\"openEdit\" [formGroup]=\"editForm\"\n                   (ngSubmit)=\"editAnimal(animal, editForm.value)\"\n                   class=\"ui form\">\n                   <div class=\"field\">\n                     <label for=\"editInput\">Animal Name</label>\n                     <input type=\"text\" id=\"editInput\"\n                    placeholder=\"Animal Name\"\n                    formControlName=\"editName\">\n                    <select formControlName=\"editColor\">\n                      <option value=\"\">\n                      <option value=\"Red\">Red\n                      <option value=\"Blue\">Blue\n                      <option value=\"Green\">Green\n                      <option value=\"Brown\">Brown\n                   </select>\n                   <select formControlName=\"editSize\">\n                     <option value=\"\">\n                     <option value=\"Small\">Small\n                     <option value=\"Medium\">Medium\n                     <option value=\"Large\">Large\n                     <option value=\"Super-Sized\">Super-Sized\n                   </select>\n                   <input type=\"date\" formControlName=\"editDOB\">\n                  </div>\n                  <input type=\"button\" class=\"ui button\" value={{cancelBtn}} (click)=\"onClickCloseForm()\">\n                  <input type=\"submit\" class=\"ui button\" value=\"{{confirmBtn}}\" formControlName=\"confirmButton\" >\n                </form>\n            </td>\n            <td>\n              <input type=\"button\" class=\"ui button\" value={{delBtn}} (click)=\"deleteAnimal(animal)\">\n           </td>\n         </tr>\n      </table>\n  </div>\n</div>\n\n\n<router-outlet></router-outlet>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>{{ title }}!</h1>\n  <h3>Pick an animal to see it's description!</h3>\n  <select [(ngModel)]=\"selectedAnimal\">\n      <option *ngFor=\"let animal of animals\" [ngValue]=\"animal\">\n        {{animal.name}}\n      </option>\n  </select>\n  <p *ngIf=\"selectedAnimal\">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>\n\n  <div class=\"ui raised segment\">\n    <h2 class=\"ui header\">Enter an animal here!</h2>\n      <form [formGroup]=\"animalForm\"\n          (ngSubmit)=\"addAnimal(animalForm.value)\"\n          class=\"ui form\" >\n          <div class=\"field\">\n            <label for=\"aniInput\">Animal Name</label>\n            <input type=\"text\" id=\"aniInput\"\n           placeholder=\"Animal Name\"\n           formControlName=\"animalName\">\n           <input type=\"submit\" class=\"ui button\" value=\"{{addBtn}}\" formControlName=\"addButton\">\n           <select formControlName=\"animalColor\">\n             <option *ngFor=\"let color of colors\" [ngValue]=\"color\">{{color}}\n          </select>\n          <select formControlName=\"animalSize\">\n            <option *ngFor=\"let size of sizes\" [ngValue]=\"size\">{{size}}\n          </select>\n          <input type=\"date\" formControlName=\"animalDOB\">\n         </div>\n       </form>\n\n       <table style=\"text-align:center\" align=\"center\">\n           <th>Name</th>\n           <th>Color</th>\n           <th>Size</th>\n           <th>DOB</th>\n           <tr *ngFor=\"let animal of animals\">\n             <td>{{animal.name}}</td>\n             <td>{{animal.color}}</td>\n             <td>{{animal.size}}</td>\n             <td>{{animal.dob}}</td>\n             <td>\n               <input type=\"button\" *ngIf=!animal.display class=\"ui button\" value={{editBtn}} (click)=\"onClickOpenForm(animal._id)\">\n               <form id={{animal._id}} *ngIf=animal.display [formGroup]=\"editForm\"\n                   (ngSubmit)=\"editAnimal(animal, editForm.value)\"\n                   class=\"ui form\">\n                   <div class=\"field\">\n                     <label for=\"editInput\">Animal Name</label>\n                     <input type=\"text\" id=\"editInput\"\n                    placeholder=\"Animal Name\"\n                    formControlName=\"editName\">\n                    <select formControlName=\"editColor\">\n                      <option value=\"\">\n                      <option value=\"Red\">Red\n                      <option value=\"Blue\">Blue\n                      <option value=\"Green\">Green\n                      <option value=\"Brown\">Brown\n                   </select>\n                   <select formControlName=\"editSize\">\n                     <option value=\"\">\n                     <option value=\"Small\">Small\n                     <option value=\"Medium\">Medium\n                     <option value=\"Large\">Large\n                     <option value=\"Super-Sized\">Super-Sized\n                   </select>\n                   <input type=\"date\" formControlName=\"editDOB\">\n                  </div>\n                  <input type=\"button\" class=\"ui button\" value={{cancelBtn}} (click)=\"onClickCloseForm(animal._id)\">\n                  <input type=\"submit\" class=\"ui button\" value=\"{{confirmBtn}}\">\n                </form>\n            </td>\n            <td>\n              <input type=\"button\" class=\"ui button\" value={{delBtn}} (click)=\"deleteAnimal(animal)\">\n           </td>\n         </tr>\n      </table>\n  </div>\n</div>\n\n\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -234,12 +234,14 @@ let AppComponent = class AppComponent {
     constructor(aniService, formBuilder) {
         this.aniService = aniService;
         this.formBuilder = formBuilder;
+        this.title = 'All about animals';
         this.addBtn = "Add Animal";
         this.editBtn = "Edit";
         this.delBtn = "Delete";
         this.confirmBtn = "Confirm";
         this.cancelBtn = "Cancel";
-        this.title = 'All about animals';
+        this.aniService.getAnimals().subscribe(result => { this.animals = result; });
+        this.openEdit = false;
         this.animalForm = this.formBuilder.group({
             animalName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             addButton: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
@@ -248,23 +250,39 @@ let AppComponent = class AppComponent {
             animalDOB: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
         });
         this.editForm = this.formBuilder.group({
-            title: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(5)]],
-            description: [''],
-            editName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            confirmButton: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            editColor: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            editSize: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            editDOB: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            editName: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(1)]],
+            editColor: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(1)]],
+            editSize: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(1)]],
+            editDOB: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(1)]],
         });
-        this.aniService.getAnimals().subscribe(result => { this.animals = result; });
-        this.openEdit = false;
+        this.colors = ['Red', 'Blue', 'Green', 'Yellow'];
+        this.sizes = ['Small', 'Medium', 'Large', 'Super-sized'];
     }
     ngOnInit() {
-        this.aniService.getAnimals();
+        //   this.aniService.getAnimals().subscribe(result => {this.animals = result;
+        //     this.editForm = this.formBuilder.group({
+        //     animalDetails: this.formBuilder.array([
+        //       this.animals.map(x => this.formBuilder.group({
+        //         editName: [x.animalName, [Validators.required, Validators.minLength(2)]],
+        //         editColor: [x.animalColor, [Validators.required, Validators.minLength(2)]],
+        //         editSize: [x.animalSize, [Validators.required, Validators.minLength(2)]],
+        //         editDOB: [x.animalDOB, [Validators.required, Validators.minLength(2)]],
+        //         confirmButton: new FormControl(''),
+        //       }))
+        //     ])
+        //   })
+        // });
+    }
+    getControls() {
+        return this.editForm.get('animalDetails');
     }
     addAnimal(animalData) {
         let animal = JSON.stringify({ color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize });
-        this.aniService.addAnimal(animal).subscribe(response => { this.animals.push(response); }, err => console.log(err));
+        this.aniService.addAnimal(animal).subscribe(response => {
+            this.animals.push(response);
+            this.animals[this.animals.length - 1].display = false;
+            console.log(this.animals[this.animals.length - 1]);
+        }, err => console.log(err));
     }
     deleteAnimal(animalData) {
         this.aniService.deleteAnimal(animalData._id).subscribe(response => { this.delFromArray(animalData); }, err => console.log(err));
@@ -283,9 +301,9 @@ let AppComponent = class AppComponent {
                 this.animals[parseInt(currAnimal)].dob = parsed.dob;
                 this.animals[parseInt(currAnimal)].name = parsed.name;
                 this.animals[parseInt(currAnimal)].size = parsed.size;
+                this.animals[parseInt(currAnimal)].display = false;
             }
         }
-        this.openEdit = false;
     }
     delFromArray(animalData) {
         for (let animal in this.animals) {
@@ -294,11 +312,20 @@ let AppComponent = class AppComponent {
             }
         }
     }
-    onClickOpenForm() {
-        this.openEdit = true;
+    onClickOpenForm(id) {
+        console.log(id);
+        for (let currAnimal in this.animals) {
+            if (this.animals[parseInt(currAnimal)]._id == id) {
+                this.animals[parseInt(currAnimal)].display = true;
+            }
+        }
     }
-    onClickCloseForm() {
-        this.openEdit = false;
+    onClickCloseForm(id) {
+        for (let currAnimal in this.animals) {
+            if (this.animals[parseInt(currAnimal)]._id == id) {
+                this.animals[parseInt(currAnimal)].display = false;
+            }
+        }
     }
 };
 AppComponent.ctorParameters = () => [

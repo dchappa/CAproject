@@ -21,18 +21,10 @@
            formControlName="animalName">
            <input type="submit" class="ui button" value="{{addBtn}}" formControlName="addButton">
            <select formControlName="animalColor">
-             <option value="">
-             <option value="Red">Red
-             <option value="Blue">Blue
-             <option value="Green">Green
-             <option value="Brown">Brown
+             <option *ngFor="let color of colors" [ngValue]="color">{{color}}
           </select>
           <select formControlName="animalSize">
-            <option value="">
-            <option value="Small">Small
-            <option value="Medium">Medium
-            <option value="Large">Large
-            <option value="Super-Sized">Super-Sized
+            <option *ngFor="let size of sizes" [ngValue]="size">{{size}}
           </select>
           <input type="date" formControlName="animalDOB">
          </div>
@@ -49,8 +41,8 @@
              <td>{{animal.size}}</td>
              <td>{{animal.dob}}</td>
              <td>
-               <input type="button" class="ui button" value={{editBtn}} (click)="onClickOpenForm()">
-               <form *ngIf="openEdit" [formGroup]="editForm"
+               <input type="button" *ngIf=!animal.display class="ui button" value={{editBtn}} (click)="onClickOpenForm(animal._id)">
+               <form id={{animal._id}} *ngIf=animal.display [formGroup]="editForm"
                    (ngSubmit)="editAnimal(animal, editForm.value)"
                    class="ui form">
                    <div class="field">
@@ -74,8 +66,8 @@
                    </select>
                    <input type="date" formControlName="editDOB">
                   </div>
-                  <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm()">
-                  <input type="submit" class="ui button" value="{{confirmBtn}}" formControlName="confirmButton" >
+                  <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm(animal._id)">
+                  <input type="submit" class="ui button" value="{{confirmBtn}}">
                 </form>
             </td>
             <td>

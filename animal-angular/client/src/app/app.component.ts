@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Animal } from './animal/animal.model';
-import { FormGroup, FormControl, FormBuilder,Validators, FormsModule } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators, FormsModule } from '@angular/forms';
 import { AnimalService } from './animal.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-root',
@@ -12,20 +14,20 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   animalForm: FormGroup;
   editForm: FormGroup;
-  animalName: FormControl;
-  addButton: FormControl;
-  animalColor: FormControl;
-  animalSize: FormControl;
-  animalDOB: FormControl;
-  editName: FormControl;
-  confirmButton: FormControl;
-  editColor: FormControl;
-  editSize: FormControl;
-  editDOB: FormControl;
   openEdit: Boolean;
   animals;
+  title = 'All about animals';
+  addBtn = "Add Animal";
+  editBtn = "Edit";
+  delBtn = "Delete";
+  confirmBtn = "Confirm";
+  cancelBtn = "Cancel";
+  colors: Array<String>;
+  sizes: Array<String>;
 
   constructor(private aniService : AnimalService, private formBuilder : FormBuilder){
+    this.aniService.getAnimals().subscribe(result => {this.animals = result});
+    this.openEdit = false;
     this.animalForm = this.formBuilder.group({
       animalName: new FormControl(''),
       addButton: new FormControl(''),
@@ -34,31 +36,39 @@ export class AppComponent {
       animalDOB: new FormControl(''),
     });
     this.editForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(5)]],
-      description: [''],
-      editName: new FormControl(''),
-      confirmButton: new FormControl(''),
-      editColor: new FormControl(''),
-      editSize: new FormControl(''),
-      editDOB: new FormControl(''),
+      editName: ['', [Validators.required, Validators.minLength(1)]],
+      editColor: ['', [Validators.required, Validators.minLength(1)]],
+      editSize: ['', [Validators.required, Validators.minLength(1)]],
+      editDOB: ['', [Validators.required, Validators.minLength(1)]],
     });
-
-    this.aniService.getAnimals().subscribe(result => {this.animals = result});
-    this.openEdit = false;
+    this.colors = ['Red', 'Blue', 'Green', 'Yellow'];
+    this.sizes = ['Small', 'Medium', 'Large', 'Super-sized'];
   }
-  addBtn = "Add Animal";
-  editBtn = "Edit";
-  delBtn = "Delete";
-  confirmBtn = "Confirm";
-  cancelBtn = "Cancel";
+
 
   ngOnInit(){
-    this.aniService.getAnimals()
+  //   this.aniService.getAnimals().subscribe(result => {this.animals = result;
+  //     this.editForm = this.formBuilder.group({
+  //     animalDetails: this.formBuilder.array([
+  //       this.animals.map(x => this.formBuilder.group({
+  //         editName: [x.animalName, [Validators.required, Validators.minLength(2)]],
+  //         editColor: [x.animalColor, [Validators.required, Validators.minLength(2)]],
+  //         editSize: [x.animalSize, [Validators.required, Validators.minLength(2)]],
+  //         editDOB: [x.animalDOB, [Validators.required, Validators.minLength(2)]],
+  //         confirmButton: new FormControl(''),
+  //       }))
+  //     ])
+  //   })
+  // });
+  }
+  getControls() {
+    return this.editForm.get('animalDetails') as FormArray;
   }
 
   addAnimal(animalData) {
     let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
-    this.aniService.addAnimal(animal).subscribe(response => {this.animals.push(response);},
+    this.aniService.addAnimal(animal).subscribe(response => {this.animals.push(response); this.animals[this.animals.length-1].display = false;
+    console.log(this.animals[this.animals.length-1])},
                                                 err => console.log(err));
   }
 
@@ -83,9 +93,9 @@ export class AppComponent {
         this.animals[parseInt(currAnimal)].dob = parsed.dob;
         this.animals[parseInt(currAnimal)].name = parsed.name;
         this.animals[parseInt(currAnimal)].size = parsed.size;
+        this.animals[parseInt(currAnimal)].display = false;
       }
     }
-    this.openEdit = false;
   }
 
   delFromArray(animalData){
@@ -96,14 +106,20 @@ export class AppComponent {
     }
   }
 
-  onClickOpenForm(){
-    this.openEdit = true;
+  onClickOpenForm(id){
+    console.log(id);
+    for(let currAnimal in this.animals){
+      if(this.animals[parseInt(currAnimal)]._id == id){
+        this.animals[parseInt(currAnimal)].display = true;
+      }
+    }
   }
 
-  onClickCloseForm(){
-    this.openEdit = false;
+  onClickCloseForm(id){
+    for(let currAnimal in this.animals){
+      if(this.animals[parseInt(currAnimal)]._id == id){
+        this.animals[parseInt(currAnimal)].display = false;
+      }
+    }
   }
-
-
-  title = 'All about animals';
 }
