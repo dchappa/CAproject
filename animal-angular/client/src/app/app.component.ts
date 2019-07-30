@@ -29,11 +29,10 @@ export class AppComponent {
     this.aniService.getAnimals().subscribe(result => {this.animals = result});
     this.openEdit = false;
     this.animalForm = this.formBuilder.group({
-      animalName: new FormControl(''),
-      addButton: new FormControl(''),
-      animalColor: new FormControl(''),
-      animalSize: new FormControl(''),
-      animalDOB: new FormControl(''),
+      animalName: new FormControl('', Validators.required),
+      animalColor: new FormControl('', Validators.required),
+      animalSize: new FormControl('', Validators.required),
+      animalDOB: new FormControl('', Validators.required),
     });
     this.editForm = this.formBuilder.group({
       editName: ['', [Validators.required, Validators.minLength(1)]],
@@ -47,28 +46,15 @@ export class AppComponent {
 
 
   ngOnInit(){
-  //   this.aniService.getAnimals().subscribe(result => {this.animals = result;
-  //     this.editForm = this.formBuilder.group({
-  //     animalDetails: this.formBuilder.array([
-  //       this.animals.map(x => this.formBuilder.group({
-  //         editName: [x.animalName, [Validators.required, Validators.minLength(2)]],
-  //         editColor: [x.animalColor, [Validators.required, Validators.minLength(2)]],
-  //         editSize: [x.animalSize, [Validators.required, Validators.minLength(2)]],
-  //         editDOB: [x.animalDOB, [Validators.required, Validators.minLength(2)]],
-  //         confirmButton: new FormControl(''),
-  //       }))
-  //     ])
-  //   })
-  // });
-  }
-  getControls() {
-    return this.editForm.get('animalDetails') as FormArray;
+
   }
 
+
   addAnimal(animalData) {
+    console.log(this.animalForm.status);
     let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
     this.aniService.addAnimal(animal).subscribe(response => {this.animals.push(response); this.animals[this.animals.length-1].display = false;
-    console.log(this.animals[this.animals.length-1])},
+    console.log(response)},
                                                 err => console.log(err));
   }
 

@@ -9,28 +9,31 @@
   </select>
   <p *ngIf="selectedAnimal">The {{selectedAnimal.name}} is colored {{selectedAnimal.color}}, is sized {{selectedAnimal.size}}, and was born on {{selectedAnimal.dob}}</p>
 
-  <div class="ui raised segment">
+  <div class="ui container" align="center">
     <h2 class="ui header">Enter an animal here!</h2>
       <form [formGroup]="animalForm"
           (ngSubmit)="addAnimal(animalForm.value)"
-          class="ui form" >
+          class="ui form">
+          <input [disabled]="!animalForm.valid" type="submit" class="ui button" value="{{addBtn}}">
           <div class="field">
             <label for="aniInput">Animal Name</label>
             <input type="text" id="aniInput"
            placeholder="Animal Name"
-           formControlName="animalName">
-           <input type="submit" class="ui button" value="{{addBtn}}" formControlName="addButton">
-           <select formControlName="animalColor">
+           formControlName="animalName" style="width: 200px" align="center">
+           <label for="aniInput">Animal Color</label>
+           <select formControlName="animalColor" style="width: 200px" align="center">
              <option *ngFor="let color of colors" [ngValue]="color">{{color}}
           </select>
-          <select formControlName="animalSize">
+          <label for="aniInput">Animal Size</label>
+          <select formControlName="animalSize" style="width: 200px" align="center">
             <option *ngFor="let size of sizes" [ngValue]="size">{{size}}
           </select>
-          <input type="date" formControlName="animalDOB">
+          <label for="aniInput">Animal DOB</label>
+          <input type="date" formControlName="animalDOB" style="width: 200px" align="center">
          </div>
        </form>
 
-       <table style="text-align:center" align="center">
+       <table style="ui celled table" align="center">
            <th>Name</th>
            <th>Color</th>
            <th>Size</th>
@@ -67,7 +70,7 @@
                    <input type="date" formControlName="editDOB">
                   </div>
                   <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm(animal._id)">
-                  <input type="submit" class="ui button" value="{{confirmBtn}}">
+                  <input [disabled]="!animalForm.valid" type="submit" class="ui button" value="{{confirmBtn}}">
                 </form>
             </td>
             <td>
