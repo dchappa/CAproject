@@ -35,10 +35,10 @@ export class AppComponent {
       animalDOB: new FormControl('', Validators.required),
     });
     this.editForm = this.formBuilder.group({
-      editName: ['', [Validators.required, Validators.minLength(1)]],
-      editColor: ['', [Validators.required, Validators.minLength(1)]],
-      editSize: ['', [Validators.required, Validators.minLength(1)]],
-      editDOB: ['', [Validators.required, Validators.minLength(1)]],
+      editName: new FormControl('', Validators.required),
+      editColor: new FormControl('', Validators.required),
+      editSize: new FormControl('', Validators.required),
+      editDOB: new FormControl('', Validators.required),
     });
     this.colors = ['Red', 'Blue', 'Green', 'Yellow'];
     this.sizes = ['Small', 'Medium', 'Large', 'Super-sized'];
