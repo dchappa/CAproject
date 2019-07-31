@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Animal } from './animal/animal.model';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators, FormsModule } from '@angular/forms';
 import { AnimalService } from './animal.service';
@@ -42,6 +42,7 @@ export class AppComponent {
     });
     this.colors = ['Red', 'Blue', 'Green', 'Yellow'];
     this.sizes = ['Small', 'Medium', 'Large', 'Super-sized'];
+    this.openEdit = true;
   }
 
 
@@ -55,7 +56,8 @@ export class AppComponent {
     let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
     this.aniService.addAnimal(animal).subscribe(response => {this.animals.push(response); this.animals[this.animals.length-1].display = false;
     console.log(response)},
-                                                err => console.log(err));
+    err => console.log(err));
+    this.animalForm.reset();
   }
 
   deleteAnimal(animalData){
@@ -66,9 +68,23 @@ export class AppComponent {
   editAnimal(animal, animalData){
     console.log(animal);
     console.log(animalData);
+    if(animalData.editName == ""){ //This assumes nothing was modified
+      animalData.editName = document.getElementById('editInput')["value"];
+      animalData.editColor = document.getElementById('editColor')["value"];
+      animalData.editSize = document.getElementById('editSize')["value"];
+      animalData.editDOB = document.getElementById('editDate')["value"];
+    }
     let newAnimal = JSON.stringify({color: animalData.editColor, dob: animalData.editDOB, name: animalData.editName, size: animalData.editSize});
     this.aniService.editAnimal(animal, newAnimal).subscribe(response => this.editFromArray(animal,newAnimal),
                                                               err => console.log(err));
+  }
+
+  editFormValid(){
+    if(document.getElementById('editInput')["value"] == "" || document.getElementById('editColor')["value"] == ""
+    || document.getElementById('editSize')["value"] == "" || document.getElementById('editDate')["value"] == ""){
+      return false;
+    }
+    return true;
   }
 
   editFromArray(animal, newAnimal){
@@ -82,6 +98,7 @@ export class AppComponent {
         this.animals[parseInt(currAnimal)].display = false;
       }
     }
+    this.openEdit = true;
   }
 
   delFromArray(animalData){
@@ -93,12 +110,13 @@ export class AppComponent {
   }
 
   onClickOpenForm(id){
-    console.log(id);
+    // @ViewChild('editName') editName:ElementRef;
     for(let currAnimal in this.animals){
       if(this.animals[parseInt(currAnimal)]._id == id){
         this.animals[parseInt(currAnimal)].display = true;
       }
     }
+    this.openEdit = false;
   }
 
   onClickCloseForm(id){
@@ -107,5 +125,6 @@ export class AppComponent {
         this.animals[parseInt(currAnimal)].display = false;
       }
     }
+    this.openEdit = true;
   }
 }

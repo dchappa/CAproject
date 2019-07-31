@@ -33,7 +33,7 @@
          </div>
        </form>
 
-       <table style="ui celled table" align="center">
+       <table class="ui celled table" style="width: 600px" align="center">
            <th>Name</th>
            <th>Color</th>
            <th>Size</th>
@@ -44,25 +44,25 @@
              <td>{{animal.size}}</td>
              <td>{{animal.dob}}</td>
              <td>
-               <input type="button" *ngIf=!animal.display class="ui button" value={{editBtn}} (click)="onClickOpenForm(animal._id)">
-               <form id={{animal._id}} *ngIf=animal.display [formGroup]="editForm"
+               <input [disabled]="!openEdit" type="button" *ngIf=!animal.display class="ui button" value={{editBtn}} (click)="onClickOpenForm(animal._id)">
+               <form  *ngIf=animal.display [formGroup]="editForm"
                    (ngSubmit)="editAnimal(animal, editForm.value)"
                    class="ui form">
-                   <div class="field">
+                   <div class="field" id={{animal._id}}>
                      <label for="editInput">Animal Name</label>
                      <input type="text" id="editInput"
                     placeholder="Animal Name"
-                    formControlName="editName">
-                    <select formControlName="editColor">
-                      <option *ngFor="let color of colors" [ngValue]="color">{{color}}
+                    formControlName="editName" [value]="animal.name">
+                    <select formControlName="editColor" id="editColor" [value]="animal.color">
+                      <option *ngFor="let color of colors" [value]="color" >{{color}}
                    </select>
-                   <select formControlName="editSize">
-                     <option *ngFor="let size of sizes" [ngValue]="size">{{size}}
+                   <select formControlName="editSize" id="editSize" [value]="animal.size">
+                     <option *ngFor="let size of sizes" [value]="size">{{size}}
                    </select>
-                   <input type="date" formControlName="editDOB">
+                   <input type="date" formControlName="editDOB" [value]="animal.dob" id="editDate">
                   </div>
                   <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm(animal._id)">
-                  <input [disabled]="!editForm.valid" type="submit" class="ui button" value="{{confirmBtn}}">
+                  <input [disabled]="!editFormValid() && editForm.pristine" type="submit" class="ui button" value="{{confirmBtn}}">
                 </form>
             </td>
             <td>
