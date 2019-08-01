@@ -122,7 +122,7 @@ AnimalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL2FuaW1hbC9hbmltYWwuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FuaW1hbC9hbmltYWwuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -208,7 +208,7 @@ AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
 
 /***/ }),
 
@@ -308,12 +308,14 @@ let AppComponent = class AppComponent {
     delFromArray(animalData) {
         for (let animal in this.animals) {
             if (this.animals[parseInt(animal)]._id == animalData._id) {
+                if (this.animals[parseInt(animal)].display == true) {
+                    this.openEdit = true;
+                }
                 this.animals.splice(parseInt(animal), 1);
             }
         }
     }
     onClickOpenForm(id) {
-        // @ViewChild('editName') editName:ElementRef;
         for (let currAnimal in this.animals) {
             if (this.animals[parseInt(currAnimal)]._id == id) {
                 this.animals[parseInt(currAnimal)].display = true;

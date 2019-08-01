@@ -123,7 +123,7 @@ var AnimalService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL2FuaW1hbC9hbmltYWwuY29tcG9uZW50LmNzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FuaW1hbC9hbmltYWwuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -213,7 +213,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
 
 /***/ }),
 
@@ -317,12 +317,14 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.delFromArray = function (animalData) {
         for (var animal in this.animals) {
             if (this.animals[parseInt(animal)]._id == animalData._id) {
+                if (this.animals[parseInt(animal)].display == true) {
+                    this.openEdit = true;
+                }
                 this.animals.splice(parseInt(animal), 1);
             }
         }
     };
     AppComponent.prototype.onClickOpenForm = function (id) {
-        // @ViewChild('editName') editName:ElementRef;
         for (var currAnimal in this.animals) {
             if (this.animals[parseInt(currAnimal)]._id == id) {
                 this.animals[parseInt(currAnimal)].display = true;
