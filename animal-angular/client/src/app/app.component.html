@@ -61,7 +61,7 @@
                    </select>
                    <input type="date" formControlName="editDOB" [value]="animal.dob" id="editDate">
                   </div>
-                  <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm(animal._id)">
+                  <input type="button" class="ui button" value={{cancelBtn}} (click)="onClickCloseForm(animal._id,editForm.value)">
                   <input [disabled]="!editFormValid() && editForm.pristine" type="submit" class="ui button" value="{{confirmBtn}}">
                 </form>
             </td>

@@ -65,10 +65,18 @@ export class AppComponent {
                                                 err => console.log(err));
   }
 
+  editFormValid(){
+    if(document.getElementById('editInput')["value"] == "" || document.getElementById('editColor')["value"] == ""
+    || document.getElementById('editSize')["value"] == "" || document.getElementById('editDate')["value"] == ""){
+      return false;
+    }
+    return true;
+  }
+
   editAnimal(animal, animalData){
     console.log(animal);
     console.log(animalData);
-    if(animalData.editName == ""){ //This assumes nothing was modified
+    if(animalData.editName == "" || animalData.editColor == "" || animalData.editSize == "" || animalData.editDOB == ""){ //This assumes nothing was modified
       animalData.editName = document.getElementById('editInput')["value"];
       animalData.editColor = document.getElementById('editColor')["value"];
       animalData.editSize = document.getElementById('editSize')["value"];
@@ -79,13 +87,6 @@ export class AppComponent {
                                                               err => console.log(err));
   }
 
-  editFormValid(){
-    if(document.getElementById('editInput')["value"] == "" || document.getElementById('editColor')["value"] == ""
-    || document.getElementById('editSize')["value"] == "" || document.getElementById('editDate')["value"] == ""){
-      return false;
-    }
-    return true;
-  }
 
   editFromArray(animal, newAnimal){
     let parsed = JSON.parse(newAnimal);
@@ -119,10 +120,14 @@ export class AppComponent {
     this.openEdit = false;
   }
 
-  onClickCloseForm(id){
+  onClickCloseForm(id, animalData){
     for(let currAnimal in this.animals){
       if(this.animals[parseInt(currAnimal)]._id == id){
         this.animals[parseInt(currAnimal)].display = false;
+        animalData.editName = this.animals[parseInt(currAnimal)].name;
+        animalData.editColor = this.animals[parseInt(currAnimal)].color;
+        animalData.editSize = this.animals[parseInt(currAnimal)].size;
+        animalData.editDOB = this.animals[parseInt(currAnimal)].dob;
       }
     }
     this.openEdit = true;
