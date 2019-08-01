@@ -105,13 +105,15 @@ export class AppComponent {
   delFromArray(animalData){
     for(let animal in this.animals){
       if(this.animals[parseInt(animal)]._id == animalData._id){
+        if(this.animals[parseInt(animal)].display == true){
+          this.openEdit = true;
+        }
         this.animals.splice(parseInt(animal),1);
       }
     }
   }
 
   onClickOpenForm(id){
-    // @ViewChild('editName') editName:ElementRef;
     for(let currAnimal in this.animals){
       if(this.animals[parseInt(currAnimal)]._id == id){
         this.animals[parseInt(currAnimal)].display = true;
