@@ -56,13 +56,13 @@ export class AppComponent {
     let animal = JSON.stringify({color: animalData.animalColor, dob: animalData.animalDOB, name: animalData.animalName, size: animalData.animalSize});
     this.aniService.addAnimal(animal).subscribe(response => {this.animals.push(response); this.animals[this.animals.length-1].display = false;
     console.log(response)},
-    err => console.log(err));
+    err => alert("Error in adding animal: " + err));
     this.animalForm.reset();
   }
 
   deleteAnimal(animalData){
     this.aniService.deleteAnimal(animalData._id).subscribe(response => {this.delFromArray(animalData);},
-                                                err => console.log(err));
+                                                err => alert("Error in delete animal: " + err));
   }
 
   editFormValid(){
@@ -84,7 +84,7 @@ export class AppComponent {
     }
     let newAnimal = JSON.stringify({color: animalData.editColor, dob: animalData.editDOB, name: animalData.editName, size: animalData.editSize});
     this.aniService.editAnimal(animal, newAnimal).subscribe(response => this.editFromArray(animal,newAnimal),
-                                                              err => console.log(err));
+                                                              err => alert("Error in editing animal: " + err));
   }
 
 
