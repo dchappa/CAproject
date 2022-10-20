@@ -10,7 +10,7 @@
 		"jquery": "^3.4.1",
 		"method-override": "~2.2.0",
 		"mongodb": "^3.2.7",
-		"mongoose": "~4.4",
+		"mongoose": "~4.13",
 		"morgan": "^1.9.1"
 	}
 }
